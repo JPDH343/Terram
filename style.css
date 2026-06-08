@@ -57,11 +57,13 @@ body {
 
 /* ── Folder Windows ───────────────────────────────────────────────────────── */
 .folder-window {
+  --window-bg:    #eaeaea;
+  --titlebar-bg:  #002BA3;
   position: fixed;
   width: 40rem;
   max-width: calc(100vw - 2rem);
   height: 22rem;
-  background: #eaeaea;
+  background: var(--window-bg);
   border: 1px solid #000;
   box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
   font-family: 'PS Interplanetary', 'Courier New', monospace;
@@ -84,11 +86,11 @@ body {
   align-items: center;
   justify-content: space-between;
   padding-left: 0.33rem;
-  border-top: 3px solid #305ddb;
-  border-right: 3px solid #021958;
-  border-left: 3px solid #305ddb;
-  /*border-bottom: 3px solid #244fc5;*/
-  background: #002BA3;
+  border-top: 3px solid color-mix(in srgb, var(--titlebar-bg) 70%, white);
+  border-right: 3px solid color-mix(in srgb, var(--titlebar-bg) 54%, black);
+  border-left: 3px solid color-mix(in srgb, var(--titlebar-bg) 70%, white);
+  /*border-bottom: 3px solid color-mix(in srgb, var(--titlebar-bg) 62%, black);*/
+  background: var(--titlebar-bg);
   flex-shrink: 0;
   box-sizing: border-box;
   margin-top: -1px;
@@ -148,10 +150,10 @@ body {
   max-height: 100%;
   padding: 3px 4px 3px 3px;
   box-sizing: border-box;
-  /*border-top: 3px solid #f4f4f4;*/
-  border-left: 3px solid #f4f4f4;
-  border-right: 3px solid #b8b8b8;
-  /*border-bottom: 3px solid #b8b8b8;*/
+  /*border-top: 3px solid color-mix(in srgb, var(--window-bg) 52%, white);*/
+  border-left: 3px solid color-mix(in srgb, var(--window-bg) 52%, white);
+  border-right: 3px solid color-mix(in srgb, var(--window-bg) 79%, black);
+  /*border-bottom: 3px solid color-mix(in srgb, var(--window-bg) 79%, black);*/
 }
 
 .folder-window__content p {
@@ -331,10 +333,87 @@ body {
   margin: 1.25rem 0 !important;
 }
 
+.journal-next-page-btn {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  border-top: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  font-family: inherit;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  opacity: 0.35;
+  text-align: center;
+  padding: 0.2rem 0;
+  margin: 1.25rem 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+.journal-next-page-btn:hover {
+  font-weight: bold;
+  opacity: 0.6;
+}
+
+.journal-page-separator {
+  border: none;
+  border-top: 1px solid currentColor;
+  opacity: 0.2;
+  margin: 1.25rem 0;
+}
+
 .journal-letters {
   margin-left: 1rem;
   line-height: 2;
 }
+
+/* ── GOT YOU window ───────────────────────────────────────────────────────── */
+.gotcha-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0;
+}
+
+.gotcha-text {
+  font-weight: bold;
+  font-size: 4.5rem;
+  letter-spacing: 0.15em;
+  user-select: none;
+}
+
+/* ── Flicker text ─────────────────────────────────────────────────────────── */
+@keyframes text-flicker {
+  0%   { opacity: 1.0; }
+  8%   { opacity: 0.9; }
+  9%   { opacity: 1.0; }
+  18%  { opacity: 0.85; }
+  19%  { opacity: 1.0; }
+  34%  { opacity: 0.9; }
+  35%  { opacity: 0.06; }
+  36%  { opacity: 0.95; }
+  52%  { opacity: 0.8; }
+  53%  { opacity: 1.0; }
+  64%  { opacity: 0.9; }
+  65%  { opacity: 0.03; }
+  66%  { opacity: 1.0; }
+  78%  { opacity: 0.85; }
+  79%  { opacity: 1.0; }
+  91%  { opacity: 0.9; }
+  94%  { opacity: 0.08; }
+  95%  { opacity: 0.9; }
+  100% { opacity: 1.0; }
+}
+
+.journal-flicker {
+  animation: text-flicker 2.8s steps(1, end) infinite;
+}
+
+.journal-flicker:nth-child(2) { animation-delay: -0.4s; }
+.journal-flicker:nth-child(3) { animation-delay: -1.1s; }
+.journal-flicker:nth-child(4) { animation-delay: -1.9s; }
 
 /* ── Friends List window ──────────────────────────────────────────────────── */
 .window-content--friends {

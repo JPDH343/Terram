@@ -47,6 +47,7 @@
   function init() {
     setupIcons();
     setupViewportResizeHandler();
+    setupJournalPages();
   }
 
   // ── Icon drag + click logic ────────────────────────────────────────────────
@@ -388,7 +389,7 @@
   // ── setupWindowControls() ─────────────────────────────────────────────────
   // Extracted verbatim from archive.liquid (Doom cleanup code removed).
 
-  function setupWindowControls(windowEl, windowId) {
+  function setupWindowControls(windowEl, windowId, onClose) {
     const controlsEl     = windowEl.querySelector('.folder-window__controls');
 
     const minimizeBtnRect  = controlsEl.querySelector('.minimize-btn');
@@ -416,6 +417,7 @@
 
         windowEl.style.display = 'none';
         openWindows.delete(windowId);
+        if (onClose) onClose();
 
         // Reset all state so the window is clean when re-opened
         windowEl.classList.remove('minimized');
@@ -511,6 +513,163 @@
         maximizeBtnRect.style.fill = '';
         maximizeSymbols.forEach(s => s.style.fill = '');
       }
+    });
+  }
+
+  // ── GOT YOU windows ───────────────────────────────────────────────────────
+
+  const GOTCHA_SVG = `
+    <svg class="control-svg" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect class="control-btn minimize-btn" x="0.5" y="0.5" width="34" height="34"/>
+      <rect class="btn-symbol" x="6" y="15" width="23" height="5" fill="black"/>
+    </svg>
+    <svg class="control-svg" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect class="control-btn maximize-btn" x="0.5" y="0.5" width="34" height="34"/>
+      <rect class="btn-symbol" x="6" y="6" width="23" height="3" fill="black"/>
+      <rect class="btn-symbol" x="6" y="9" width="23" height="3" fill="black"/>
+      <rect class="btn-symbol" x="6" y="12" width="3" height="17" fill="black"/>
+      <rect class="btn-symbol" x="26" y="12" width="3" height="17" fill="black"/>
+      <rect class="btn-symbol" x="6" y="26" width="23" height="3" fill="black"/>
+    </svg>
+    <svg class="control-svg" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect class="control-btn close-btn" x="0.5" y="0.5" width="34" height="34"/>
+      <rect class="btn-symbol" x="3" y="3" width="4" height="4" fill="black"/>
+      <rect class="btn-symbol" x="27" y="3" width="4" height="4" fill="black"/>
+      <rect class="btn-symbol" x="7" y="7" width="4" height="4" fill="black"/>
+      <rect class="btn-symbol" x="23" y="7" width="4" height="4" fill="black"/>
+      <rect class="btn-symbol" x="11" y="11" width="4" height="4" fill="black"/>
+      <rect class="btn-symbol" x="19" y="11" width="4" height="4" fill="black"/>
+      <rect class="btn-symbol" x="15" y="15" width="4" height="4" fill="black"/>
+      <rect class="btn-symbol" x="11" y="19" width="4" height="4" fill="black"/>
+      <rect class="btn-symbol" x="19" y="19" width="4" height="4" fill="black"/>
+      <rect class="btn-symbol" x="7" y="23" width="4" height="4" fill="black"/>
+      <rect class="btn-symbol" x="23" y="23" width="4" height="4" fill="black"/>
+      <rect class="btn-symbol" x="3" y="27" width="4" height="4" fill="black"/>
+      <rect class="btn-symbol" x="27" y="27" width="4" height="4" fill="black"/>
+    </svg>`;
+
+  function openGotchaWindows(onAllClosed) {
+    const TOTAL      = 13;
+    const W          = Math.round(40 * 16 * 0.75); // 75% of 40rem
+    const H          = Math.round(22 * 16 * 0.75); // 75% of 22rem
+    let closedCount  = 0;
+
+    function onWindowClosed() {
+      closedCount++;
+      if (closedCount >= TOTAL) onAllClosed();
+    }
+
+    function createGotchaWindow(left, top, index) {
+      const windowId = 'gotcha-window-' + index;
+      const windowEl = document.createElement('div');
+      windowEl.id        = windowId;
+      windowEl.className = 'folder-window';
+      windowEl.innerHTML = `
+        <div class="folder-window__inner">
+          <div class="folder-window__title-bar">
+            <span class="folder-window__title"></span>
+            <div class="folder-window__controls">${GOTCHA_SVG}</div>
+          </div>
+          <div class="folder-window__content gotcha-content">
+            <span class="gotcha-text">GOT YOU</span>
+          </div>
+          <div class="resize-handle resize-handle-top"></div>
+          <div class="resize-handle resize-handle-right"></div>
+          <div class="resize-handle resize-handle-bottom"></div>
+          <div class="resize-handle resize-handle-left"></div>
+          <div class="resize-handle resize-handle-top-left"></div>
+          <div class="resize-handle resize-handle-top-right"></div>
+          <div class="resize-handle resize-handle-bottom-left"></div>
+          <div class="resize-handle resize-handle-bottom-right"></div>
+        </div>`;
+
+      document.body.appendChild(windowEl);
+      openWindows.add(windowId);
+
+      windowEl.style.position = 'fixed';
+      windowEl.style.left     = left + 'px';
+      windowEl.style.top      = top  + 'px';
+      windowEl.style.width    = W    + 'px';
+      windowEl.style.height   = H    + 'px';
+      windowEl.style.zIndex   = ++highestZIndex;
+      windowEl.style.display  = 'block';
+
+      makeWindowDraggable(windowEl);
+      makeWindowResizable(windowEl);
+      setupWindowControls(windowEl, windowId, onWindowClosed);
+      startGotchaFlash(windowEl);
+    }
+
+    // First window: centered
+    const cx = Math.round((window.innerWidth  - W) / 2);
+    const cy = Math.round((window.innerHeight - H) / 2);
+    createGotchaWindow(cx, cy, 0);
+
+    // 12 more: random positions, 0.25s apart starting after 2s
+    for (let i = 1; i <= 12; i++) {
+      setTimeout(() => {
+        const { borderLeft, borderRight, borderTop, borderBottom } = getBoundaries();
+        const rx = borderLeft + Math.random() * Math.max(0, borderRight  - borderLeft  - W);
+        const ry = borderTop  + Math.random() * Math.max(0, borderBottom - borderTop   - H);
+        createGotchaWindow(Math.round(rx), Math.round(ry), i);
+      }, 2000 + (i - 1) * 250);
+    }
+  }
+
+  function startGotchaFlash(windowEl) {
+    const TEXT_COLORS = ['#FF0000','#FF6600','#FFFF00','#00CC00','#00CCFF','#FF00FF','#FF0099','#FFFFFF','#FF3300','#CC00FF'];
+    const BG_GRAY     = '#eaeaea';
+    const BG_BLUE     = '#002BA3';
+
+    const textEl = windowEl.querySelector('.gotcha-text');
+
+    const textTimer = setInterval(() => {
+      if (!document.body.contains(windowEl)) { clearInterval(textTimer); return; }
+      textEl.style.color = TEXT_COLORS[Math.floor(Math.random() * TEXT_COLORS.length)];
+    }, 70);
+
+    const bgTimer = setInterval(() => {
+      if (!document.body.contains(windowEl)) { clearInterval(bgTimer); return; }
+      const useBlue = Math.random() < 0.5;
+      windowEl.style.setProperty('--window-bg', useBlue ? BG_BLUE : BG_GRAY);
+    }, 90);
+  }
+
+  // ── Journal page reveal ────────────────────────────────────────────────────
+
+  function setupJournalPages() {
+    document.querySelectorAll('.journal-next-page-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.dataset.action === 'gotcha') {
+          // Replace button with separator then launch gotcha sequence
+          const separator = document.createElement('hr');
+          separator.className = 'journal-page-separator';
+          btn.parentNode.insertBefore(separator, btn);
+          btn.remove();
+          openGotchaWindows(() => {
+            const finalPage = document.getElementById('journal-page-final');
+            if (finalPage) finalPage.style.display = '';
+          });
+          return;
+        }
+
+        const targetId = btn.dataset.reveals;
+        const targetPage = document.getElementById(targetId);
+
+        // Reveal the next page
+        if (targetPage) targetPage.style.display = '';
+
+        // Find the next [next page] button after this one and show it
+        const allBtns = Array.from(document.querySelectorAll('.journal-next-page-btn'));
+        const nextBtn = allBtns[allBtns.indexOf(btn) + 1];
+        if (nextBtn) nextBtn.style.display = '';
+
+        // Replace this button with a thin separator
+        const separator = document.createElement('hr');
+        separator.className = 'journal-page-separator';
+        btn.parentNode.insertBefore(separator, btn);
+        btn.remove();
+      });
     });
   }
 
