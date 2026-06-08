@@ -1,0 +1,2254 @@
+<style>
+  /* Custom Fonts - Inline Style Tag */
+  {% for font in shop.metaobjects.custom_font.values %}
+    {% if font.font_name != blank and font.font_file != blank %}
+    @font-face {
+      font-family: '{{ font.font_name }}';
+      src: url('{{ font.font_file | file_url }}') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+    {% endif %}
+  {% endfor %}
+</style>
+
+<div class="archive full-width" style="
+  color: {{ section.settings.text_color }};
+">
+  <div class="archive-content">
+    <!-- Folder grid -->
+    <div class="archive-folders">
+      {% render 'folder-icon', label: 'Unexplained' %}
+      {% render 'folder-icon', label: 'Events' %}
+      {% render 'folder-icon', label: 'Interviews' %}
+      {% render 'folder-icon', label: 'Documents' %}
+      {% render 'folder-icon', label: 'Contact' %}
+    </div>
+
+    <!-- Folder Windows -->
+    <div id="folder-window-unexplained" class="folder-window" data-folder="unexplained" style="display: none;">
+      <div class="folder-window__inner">
+      <div class="folder-window__title-bar">
+        <span class="folder-window__title">Unexplained</span>
+        <div class="folder-window__controls">
+          <svg width="103" height="35" viewBox="0 0 102.5 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect class="control-btn minimize-btn" x="0.5" y="0.5" width="34" height="34" stroke="black"/>
+            <path d="M10 18H26" stroke="black" stroke-width="2"/>
+            <rect class="control-btn maximize-btn" x="34.5" y="0.5" width="34" height="34" fill="#EFEFEF" stroke="black"/>
+            <path d="M43 12H59" stroke="black" stroke-width="2"/>
+            <path d="M43 14H59" stroke="black" stroke-width="2"/>
+            <path d="M44 14V23" stroke="black" stroke-width="2"/>
+            <path d="M58 14V23" stroke="black" stroke-width="2"/>
+            <path d="M43 23H59" stroke="black" stroke-width="2"/>
+            <rect class="control-btn close-btn" x="68.5" y="0.5" width="34" height="34" stroke="black"/>
+            <path d="M80 23.3137L91.3137 12" stroke="black" stroke-width="2"/>
+            <path d="M80 12L91.3137 23.3137" stroke="black" stroke-width="2"/>
+          </svg>
+        </div>
+      </div>
+      <div class="folder-window__content">
+        <div class="folder-window__file-list">
+          {% assign has_files = false %}
+          {% for file in shop.metaobjects.archive_file.values %}
+            {% assign folder_clean = file.folder | replace: '[', '' | replace: ']', '' | replace: '"', '' %}
+            {% if folder_clean == 'unexplained' %}
+              {% assign has_files = true %}
+              <div class="file-list-item" 
+                   data-file-name="{{ file.file_name }}"
+                   data-file-id="{{ file.file_name | handleize }}"
+                   style="cursor: pointer;">
+                <span class="file-list-item__name">{{ file.file_name }}</span>
+                <span class="file-list-item__timestamp">{{ file.timestamp }}</span>
+              </div>
+            {% endif %}
+          {% endfor %}
+          {% unless has_files %}
+            <div class="folder-window__empty-state">
+              <p>No files in this folder.</p>
+            </div>
+          {% endunless %}
+        </div>
+      </div>
+      <!-- Resize handles -->
+      <div class="resize-handle resize-handle-top"></div>
+      <div class="resize-handle resize-handle-right"></div>
+      <div class="resize-handle resize-handle-bottom"></div>
+      <div class="resize-handle resize-handle-left"></div>
+      <div class="resize-handle resize-handle-top-left"></div>
+      <div class="resize-handle resize-handle-top-right"></div>
+      <div class="resize-handle resize-handle-bottom-left"></div>
+      <div class="resize-handle resize-handle-bottom-right"></div>
+      </div>
+    </div>
+
+    <div id="folder-window-events" class="folder-window" data-folder="events" style="display: none;">
+      <div class="folder-window__inner">
+      <div class="folder-window__title-bar">
+        <span class="folder-window__title">Events</span>
+        <div class="folder-window__controls">
+          <svg width="103" height="35" viewBox="0 0 102.5 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect class="control-btn minimize-btn" x="0.5" y="0.5" width="34" height="34" stroke="black"/>
+            <path d="M10 18H26" stroke="black" stroke-width="2"/>
+            <rect class="control-btn maximize-btn" x="34.5" y="0.5" width="34" height="34" fill="#EFEFEF" stroke="black"/>
+            <path d="M43 12H59" stroke="black" stroke-width="2"/>
+            <path d="M43 14H59" stroke="black" stroke-width="2"/>
+            <path d="M44 14V23" stroke="black" stroke-width="2"/>
+            <path d="M58 14V23" stroke="black" stroke-width="2"/>
+            <path d="M43 23H59" stroke="black" stroke-width="2"/>
+            <rect class="control-btn close-btn" x="68.5" y="0.5" width="34" height="34" stroke="black"/>
+            <path d="M80 23.3137L91.3137 12" stroke="black" stroke-width="2"/>
+            <path d="M80 12L91.3137 23.3137" stroke="black" stroke-width="2"/>
+          </svg>
+        </div>
+      </div>
+      <div class="folder-window__content">
+        <div class="folder-window__file-list">
+          {% assign has_files = false %}
+          {% for file in shop.metaobjects.archive_file.values %}
+            {% assign folder_clean = file.folder | replace: '[', '' | replace: ']', '' | replace: '"', '' %}
+            {% if folder_clean == 'events' %}
+              {% assign has_files = true %}
+              <div class="file-list-item" 
+                   data-file-name="{{ file.file_name }}"
+                   data-file-id="{{ file.file_name | handleize }}"
+                   style="cursor: pointer;">
+                <span class="file-list-item__name">{{ file.file_name }}</span>
+                <span class="file-list-item__timestamp">{{ file.timestamp }}</span>
+              </div>
+            {% endif %}
+          {% endfor %}
+          {% unless has_files %}
+            <div class="folder-window__empty-state">
+              <p>No files in this folder.</p>
+            </div>
+          {% endunless %}
+        </div>
+      </div>
+      <!-- Resize handles -->
+      <div class="resize-handle resize-handle-top"></div>
+      <div class="resize-handle resize-handle-right"></div>
+      <div class="resize-handle resize-handle-bottom"></div>
+      <div class="resize-handle resize-handle-left"></div>
+      <div class="resize-handle resize-handle-top-left"></div>
+      <div class="resize-handle resize-handle-top-right"></div>
+      <div class="resize-handle resize-handle-bottom-left"></div>
+      <div class="resize-handle resize-handle-bottom-right"></div>
+      </div>
+    </div>
+
+    <div id="folder-window-interviews" class="folder-window" data-folder="interviews" style="display: none;">
+      <div class="folder-window__inner">
+      <div class="folder-window__title-bar">
+        <span class="folder-window__title">Interviews</span>
+        <div class="folder-window__controls">
+          <svg width="103" height="35" viewBox="0 0 102.5 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect class="control-btn minimize-btn" x="0.5" y="0.5" width="34" height="34" stroke="black"/>
+            <path d="M10 18H26" stroke="black" stroke-width="2"/>
+            <rect class="control-btn maximize-btn" x="34.5" y="0.5" width="34" height="34" fill="#EFEFEF" stroke="black"/>
+            <path d="M43 12H59" stroke="black" stroke-width="2"/>
+            <path d="M43 14H59" stroke="black" stroke-width="2"/>
+            <path d="M44 14V23" stroke="black" stroke-width="2"/>
+            <path d="M58 14V23" stroke="black" stroke-width="2"/>
+            <path d="M43 23H59" stroke="black" stroke-width="2"/>
+            <rect class="control-btn close-btn" x="68.5" y="0.5" width="34" height="34" stroke="black"/>
+            <path d="M80 23.3137L91.3137 12" stroke="black" stroke-width="2"/>
+            <path d="M80 12L91.3137 23.3137" stroke="black" stroke-width="2"/>
+          </svg>
+        </div>
+      </div>
+      <div class="folder-window__content">
+        <div class="folder-window__file-list">
+          {% assign has_files = false %}
+          {% for file in shop.metaobjects.archive_file.values %}
+            {% assign folder_clean = file.folder | replace: '[', '' | replace: ']', '' | replace: '"', '' %}
+            {% if folder_clean == 'interviews' %}
+              {% assign has_files = true %}
+              <div class="file-list-item" 
+                   data-file-name="{{ file.file_name }}"
+                   data-file-id="{{ file.file_name | handleize }}"
+                   style="cursor: pointer;">
+                <span class="file-list-item__name">{{ file.file_name }}</span>
+                <span class="file-list-item__timestamp">{{ file.timestamp }}</span>
+              </div>
+            {% endif %}
+          {% endfor %}
+          {% unless has_files %}
+            <div class="folder-window__empty-state">
+              <p>No files in this folder.</p>
+            </div>
+          {% endunless %}
+        </div>
+      </div>
+      <!-- Resize handles -->
+      <div class="resize-handle resize-handle-top"></div>
+      <div class="resize-handle resize-handle-right"></div>
+      <div class="resize-handle resize-handle-bottom"></div>
+      <div class="resize-handle resize-handle-left"></div>
+      <div class="resize-handle resize-handle-top-left"></div>
+      <div class="resize-handle resize-handle-top-right"></div>
+      <div class="resize-handle resize-handle-bottom-left"></div>
+      <div class="resize-handle resize-handle-bottom-right"></div>
+      </div>
+    </div>
+
+    <div id="folder-window-documents" class="folder-window" data-folder="documents" style="display: none;">
+      <div class="folder-window__inner">
+      <div class="folder-window__title-bar">
+        <span class="folder-window__title">Documents</span>
+        <div class="folder-window__controls">
+          <svg width="103" height="35" viewBox="0 0 102.5 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect class="control-btn minimize-btn" x="0.5" y="0.5" width="34" height="34" stroke="black"/>
+            <path d="M10 18H26" stroke="black" stroke-width="2"/>
+            <rect class="control-btn maximize-btn" x="34.5" y="0.5" width="34" height="34" fill="#EFEFEF" stroke="black"/>
+            <path d="M43 12H59" stroke="black" stroke-width="2"/>
+            <path d="M43 14H59" stroke="black" stroke-width="2"/>
+            <path d="M44 14V23" stroke="black" stroke-width="2"/>
+            <path d="M58 14V23" stroke="black" stroke-width="2"/>
+            <path d="M43 23H59" stroke="black" stroke-width="2"/>
+            <rect class="control-btn close-btn" x="68.5" y="0.5" width="34" height="34" stroke="black"/>
+            <path d="M80 23.3137L91.3137 12" stroke="black" stroke-width="2"/>
+            <path d="M80 12L91.3137 23.3137" stroke="black" stroke-width="2"/>
+          </svg>
+        </div>
+      </div>
+      <div class="folder-window__content">
+        <div class="folder-window__file-list">
+          {% assign has_files = false %}
+          {% for file in shop.metaobjects.archive_file.values %}
+            {% assign folder_clean = file.folder | replace: '[', '' | replace: ']', '' | replace: '"', '' %}
+            {% if folder_clean == 'documents' %}
+              {% assign has_files = true %}
+              <div class="file-list-item" 
+                   data-file-name="{{ file.file_name }}"
+                   data-file-id="{{ file.file_name | handleize }}"
+                   style="cursor: pointer;">
+                <span class="file-list-item__name">{{ file.file_name }}</span>
+                <span class="file-list-item__timestamp">{{ file.timestamp }}</span>
+              </div>
+            {% endif %}
+          {% endfor %}
+          {% unless has_files %}
+            <div class="folder-window__empty-state">
+              <p>No files in this folder.</p>
+            </div>
+          {% endunless %}
+        </div>
+      </div>
+      <!-- Resize handles -->
+      <div class="resize-handle resize-handle-top"></div>
+      <div class="resize-handle resize-handle-right"></div>
+      <div class="resize-handle resize-handle-bottom"></div>
+      <div class="resize-handle resize-handle-left"></div>
+      <div class="resize-handle resize-handle-top-left"></div>
+      <div class="resize-handle resize-handle-top-right"></div>
+      <div class="resize-handle resize-handle-bottom-left"></div>
+      <div class="resize-handle resize-handle-bottom-right"></div>
+      </div>
+    </div>
+
+    <div id="folder-window-contact" class="folder-window" data-folder="contact" style="display: none;">
+      <div class="folder-window__inner">
+      <div class="folder-window__title-bar">
+        <span class="folder-window__title">Contact</span>
+        <div class="folder-window__controls">
+          <svg width="103" height="35" viewBox="0 0 102.5 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect class="control-btn minimize-btn" x="0.5" y="0.5" width="34" height="34" stroke="black"/>
+            <path d="M10 18H26" stroke="black" stroke-width="2"/>
+            <rect class="control-btn maximize-btn" x="34.5" y="0.5" width="34" height="34" fill="#EFEFEF" stroke="black"/>
+            <path d="M43 12H59" stroke="black" stroke-width="2"/>
+            <path d="M43 14H59" stroke="black" stroke-width="2"/>
+            <path d="M44 14V23" stroke="black" stroke-width="2"/>
+            <path d="M58 14V23" stroke="black" stroke-width="2"/>
+            <path d="M43 23H59" stroke="black" stroke-width="2"/>
+            <rect class="control-btn close-btn" x="68.5" y="0.5" width="34" height="34" stroke="black"/>
+            <path d="M80 23.3137L91.3137 12" stroke="black" stroke-width="2"/>
+            <path d="M80 12L91.3137 23.3137" stroke="black" stroke-width="2"/>
+          </svg>
+        </div>
+      </div>
+      <div class="folder-window__content">
+        <div class="folder-window__file-list">
+          {% assign has_files = false %}
+          {% for file in shop.metaobjects.archive_file.values %}
+            {% assign folder_clean = file.folder | replace: '[', '' | replace: ']', '' | replace: '"', '' %}
+            {% if folder_clean == 'contact' %}
+              {% assign has_files = true %}
+              <div class="file-list-item" 
+                   data-file-name="{{ file.file_name }}"
+                   data-file-id="{{ file.file_name | handleize }}"
+                   style="cursor: pointer;">
+                <span class="file-list-item__name">{{ file.file_name }}</span>
+                <span class="file-list-item__timestamp">{{ file.timestamp }}</span>
+              </div>
+            {% endif %}
+          {% endfor %}
+          {% unless has_files %}
+            <div class="folder-window__empty-state">
+              <p>No files in this folder.</p>
+            </div>
+          {% endunless %}
+        </div>
+      </div>
+      <!-- Resize handles -->
+      <div class="resize-handle resize-handle-top"></div>
+      <div class="resize-handle resize-handle-right"></div>
+      <div class="resize-handle resize-handle-bottom"></div>
+      <div class="resize-handle resize-handle-left"></div>
+      <div class="resize-handle resize-handle-top-left"></div>
+      <div class="resize-handle resize-handle-top-right"></div>
+      <div class="resize-handle resize-handle-bottom-left"></div>
+      <div class="resize-handle resize-handle-bottom-right"></div>
+      </div>
+    </div>
+
+    <!-- File windows will be dynamically created here -->
+    <div id="file-windows-container"></div>
+
+
+
+    <!-- Hidden file content data -->
+    <div id="file-data-storage" style="display: none;">
+      {% for file in shop.metaobjects.archive_file.values %}
+        {% assign content_blocks = file.content_blocks.value %}
+        <div class="file-data" 
+             data-file-id="{{ file.file_name | handleize }}"
+             data-file-name="{{ file.file_name }}"
+             data-folder="{{ file.folder }}"
+             data-timestamp="{{ file.timestamp }}">
+          {% for content_block in content_blocks %}
+            <!-- DEBUG: Block type = {{ content_block.system.type }} -->
+            {% if content_block.system.type == 'archive_text_block' %}
+              <!-- DEBUG: Text block found -->
+              <div class="content-block" data-block-type="text" data-font-family="{{ content_block.font_family }}" data-font-size="{{ content_block.font_size }}">
+                <div class="block-text-content">{{ content_block.text_content }}</div>
+              </div>
+            {% elsif content_block.system.type == 'archive_image_block' %}
+              <!-- DEBUG: Image block found, image = {{ content_block.image }}, scale = {{ content_block.scale }} -->
+              <div class="content-block" data-block-type="image" data-scale="{{ content_block.scale | default: 100 }}">
+                <div class="block-image-content">{{ content_block.image | image_url: width: 1200 | image_tag }}</div>
+              </div>
+            {% elsif content_block.system.type == 'archive_video_block' %}
+              <div class="content-block" data-block-type="video" data-scale="{{ content_block.scale | default: 100 }}">
+                <div class="block-video-content">
+                  {% if content_block.video_url != blank %}
+                    <video controls>
+                      <source src="{{ content_block.video_url }}" type="video/mp4">
+                    </video>
+                  {% else %}
+                    <p style="color: #888;">Add video URL from Content > Files in the "Video URL" field.</p>
+                  {% endif %}
+                </div>
+              </div>
+            {% elsif content_block.system.type == 'archive_game_block' %}
+              <div class="content-block" data-block-type="game" data-game-type="{{ content_block.game }}" data-scale="{{ content_block.scale | default: 100 }}">
+                <div class="block-game-content">
+                  <div class="game-header">{{ content_block.display_name | default: content_block.game }}</div>
+                  {% if content_block.game == 'doomclone' %}
+                    <canvas class="game-canvas doom-canvas" width="600" height="375"></canvas>
+                    <div class="game-controls">Click to start. Move: WASD | Aim/Shoot: Mouse/Click | Press Ctrl+Shift+R to hard refresh if black screen</div>
+                  {% elsif content_block.game == 'brickbreaker' %}
+                    <canvas class="game-canvas" width="400" height="400"></canvas>
+                    <div class="game-controls game-controls-desktop">Use arrow keys to play</div>
+                    <div class="game-controls game-controls-mobile">Touch and drag to play</div>
+                  {% elsif content_block.game == 'snake' %}
+                    <canvas class="game-canvas" width="400" height="400"></canvas>
+                    <div class="game-controls game-controls-desktop">Use arrow keys to play</div>
+                    <div class="game-controls game-controls-mobile">Swipe to move</div>
+                  {% else %}
+                    <canvas class="game-canvas" width="400" height="400"></canvas>
+                    <div class="game-controls">Use arrow keys to play. Press SPACE or ENTER to start.</div>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'archive-games.js' | asset_url }}" defer></script>
+
+<!-- Doom scripts will be loaded dynamically when needed to avoid WebGL conflicts -->
+<script>
+  // Provide Doom script URLs to archive-games.js for dynamic loading
+  window.DOOM_SCRIPT_URLS = [
+    "{{ 'doom-program1.js' | asset_url }}",
+    "{{ 'doom-jsfxr.js' | asset_url }}",
+    "{{ 'doom-audio.js' | asset_url }}",
+    "{{ 'doom-utils.js' | asset_url }}",
+    "{{ 'doom-objects.js' | asset_url }}",
+    "{{ 'doom-graphics.js' | asset_url }}",
+    "{{ 'doom-game.js' | asset_url }}",
+    "{{ 'doom-map.js' | asset_url }}",
+    "{{ 'doom-webgl.js' | asset_url }}"
+  ];
+</script>
+
+{% javascript %}
+  // Text edits are stored in memory only - reset on page refresh
+  window.editedTextContent = {};
+
+  function initializeArchive() {
+    const folders = document.querySelectorAll('.folder-icon');
+    let highestZIndex = 100;
+    
+    // Define boundaries matching .page-border insets (same as homepage)
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const borderTop = ((1.375 + 2) * 16) * 2; // 108px - doubled to prevent header collision
+    const borderLeft = 1 * 16; // 16px
+    const borderRight = viewportWidth - (1 * 16);
+    const borderBottom = viewportHeight - (1 * 16);
+    
+    // Collision detection removed to allow folder overlapping
+    
+    folders.forEach(folder => {
+      let isDragging = false;
+      let startX, startY;
+      let currentLeft = 0;
+      let currentTop = 0;
+      let hasMoved = false;
+      
+      // Set initial position styling
+      folder.style.position = 'fixed';
+      folder.style.cursor = 'pointer';
+      
+      // Randomize initial position within safe area
+      const folderRect = folder.getBoundingClientRect();
+      const folderWidth = folderRect.width || 120;
+      const folderHeight = folderRect.height || 80;
+      
+      // Add extra padding to ensure folders stay well within bounds
+      const padding = 20;
+      const safeWidth = borderRight - borderLeft - folderWidth - padding;
+      const safeHeight = borderBottom - borderTop - folderHeight - padding;
+      
+      // Set random position within safe area
+      const randomX = borderLeft + Math.random() * safeWidth;
+      const randomY = borderTop + Math.random() * safeHeight;
+      
+      folder.style.left = randomX + 'px';
+      folder.style.top = randomY + 'px';
+      
+      currentLeft = randomX;
+      currentTop = randomY;
+      folder.style.zIndex = '10';
+      
+      const handleDragStart = (e) => {
+        console.log('DRAG START');
+        isDragging = true;
+        hasMoved = false;
+        const touch = e.touches ? e.touches[0] : e;
+        startX = touch.clientX;
+        startY = touch.clientY;
+        
+        folder.style.zIndex = '1000';
+      };
+      
+      folder.addEventListener('mousedown', handleDragStart);
+      folder.addEventListener('touchstart', handleDragStart, { passive: false });
+      
+      const handleDragMove = (e) => {
+        if (!isDragging) return;
+        
+        const touch = e.touches ? e.touches[0] : e;
+        const deltaX = touch.clientX - startX;
+        const deltaY = touch.clientY - startY;
+        
+        if (Math.abs(deltaX) > 5 || Math.abs(deltaY) > 5) {
+          if (!hasMoved) {
+            console.log('MOVEMENT DETECTED - Setting hasMoved = true');
+            e.preventDefault(); // Only prevent default when actually dragging
+          }
+          hasMoved = true;
+        }
+        
+        let newX = currentLeft + deltaX;
+        let newY = currentTop + deltaY;
+        
+        // Apply new position
+        folder.style.left = newX + 'px';
+        folder.style.top = newY + 'px';
+        
+        const folderRect = folder.getBoundingClientRect();
+        
+        // Recalculate boundaries on every move (for responsive resize)
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const borderTop = ((1.375 + 2) * 16) * 2; // 108px - doubled to prevent header collision
+        const borderLeft = 1 * 16; // 16px
+        const borderRight = viewportWidth - (1 * 16);
+        const borderBottom = viewportHeight - (1 * 16);
+        
+        // Constrain to boundaries
+        if (folderRect.left < borderLeft) {
+          newX = newX + (borderLeft - folderRect.left);
+        }
+        if (folderRect.right > borderRight) {
+          newX = newX - (folderRect.right - borderRight);
+        }
+        if (folderRect.top < borderTop) {
+          newY = newY + (borderTop - folderRect.top);
+        }
+        if (folderRect.bottom > borderBottom) {
+          newY = newY - (folderRect.bottom - borderBottom);
+        }
+        
+        folder.style.left = newX + 'px';
+        folder.style.top = newY + 'px';
+      };
+      
+      document.addEventListener('mousemove', handleDragMove);
+      document.addEventListener('touchmove', handleDragMove, { passive: false });
+      
+      const handleDragEnd = (e) => {
+        console.log('DRAG END - isDragging:', isDragging, 'hasMoved:', hasMoved);
+        if (isDragging) {
+          isDragging = false;
+          folder.style.zIndex = '10';
+          
+          if (hasMoved) {
+            const rect = folder.getBoundingClientRect();
+            currentLeft = rect.left;
+            currentTop = rect.top;
+            
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }
+      };
+      
+      document.addEventListener('mouseup', handleDragEnd);
+      document.addEventListener('touchend', handleDragEnd);
+      
+      // Handle click/tap to open folder
+      folder.addEventListener('click', (e) => {
+        console.log('FOLDER CLICK EVENT FIRED');
+        console.log('  - Event type:', e.type);
+        console.log('  - Event target:', e.target);
+        console.log('  - hasMoved flag:', hasMoved);
+        console.log('  - isDragging flag:', isDragging);
+        
+        if (hasMoved) {
+          // Was dragging, prevent click
+          console.log('  BLOCKING click (was dragging)');
+          e.preventDefault();
+          e.stopPropagation();
+          hasMoved = false;
+        } else {
+          // Open folder window
+          console.log('  OPENING folder window');
+          const label = folder.querySelector('.folder-icon__label').textContent.toLowerCase();
+          console.log('  - Folder label:', label);
+          openFolderWindow(label, folder);
+        }
+      });
+    });
+
+    // Folder window management
+    const openWindows = new Set();
+
+    function openFolderWindow(folderName, folderIcon) {
+      const windowId = `folder-window-${folderName}`;
+      
+      // Check if window already exists and is open
+      if (openWindows.has(windowId)) {
+        const existingWindow = document.getElementById(windowId);
+        if (existingWindow) {
+          // Bring to front
+          existingWindow.style.zIndex = ++highestZIndex;
+          return;
+        } else {
+          // Window was closed/removed but still in Set - remove it
+          openWindows.delete(windowId);
+        }
+      }
+
+      const folderWindow = document.getElementById(windowId);
+      if (!folderWindow) return;
+
+      // Mark as open
+      openWindows.add(windowId);
+
+      // Define strict boundaries first
+      const borderTop = ((1.375 + 2) * 16) * 2; // 108px - doubled to prevent header collision
+      const borderLeft = 16;
+      const borderRight = window.innerWidth - 16;
+      const borderBottom = window.innerHeight - 16;
+      
+      const maxAvailableWidth = borderRight - borderLeft;
+      const maxAvailableHeight = borderBottom - borderTop;
+
+      // Position window near the folder icon
+      const folderRect = folderIcon.getBoundingClientRect();
+      let windowWidth = 42 * 16; // 32rem
+      let windowHeight = 400; // Initial height
+      
+      // Constrain window size to fit within viewport
+      if (windowWidth > maxAvailableWidth) {
+        windowWidth = maxAvailableWidth;
+      }
+      if (windowHeight > maxAvailableHeight) {
+        windowHeight = maxAvailableHeight;
+      }
+      
+      // Try to position to the right of the folder
+      let windowLeft = folderRect.right + 20;
+      let windowTop = folderRect.top;
+
+      // If too far right, position to the left
+      if (windowLeft + windowWidth > borderRight) {
+        windowLeft = folderRect.left - windowWidth - 20;
+      }
+      
+      // If still out of bounds horizontally, push it within bounds
+      if (windowLeft < borderLeft) {
+        windowLeft = borderLeft;
+      }
+      if (windowLeft + windowWidth > borderRight) {
+        windowLeft = Math.max(borderLeft, borderRight - windowWidth);
+      }
+      
+      // Constrain vertical position strictly
+      if (windowTop < borderTop) {
+        windowTop = borderTop;
+      }
+      if (windowTop + windowHeight > borderBottom) {
+        windowTop = Math.max(borderTop, borderBottom - windowHeight);
+      }
+
+      // Apply positioning and size
+      folderWindow.style.position = 'fixed';
+      folderWindow.style.left = windowLeft + 'px';
+      folderWindow.style.top = windowTop + 'px';
+      folderWindow.style.width = windowWidth + 'px';
+      folderWindow.style.height = windowHeight + 'px';
+      folderWindow.style.zIndex = ++highestZIndex;
+      folderWindow.style.display = 'block';
+
+      // Make window draggable
+      makeWindowDraggable(folderWindow);
+
+      // Make window resizable
+      makeWindowResizable(folderWindow);
+
+      // Setup control buttons
+      setupWindowControls(folderWindow, windowId);
+      
+      // Add click handlers to file items
+      setupFileClickHandlers(folderWindow);
+    }
+
+    function setupFileClickHandlers(folderWindow) {
+      const fileItems = folderWindow.querySelectorAll('.file-list-item');
+      fileItems.forEach(fileItem => {
+        fileItem.addEventListener('click', () => {
+          const fileId = fileItem.dataset.fileId;
+          const fileName = fileItem.dataset.fileName;
+          openFileWindow(fileId, fileName, folderWindow);
+        });
+      });
+    }
+
+    function openFileWindow(fileId, fileName, parentWindow) {
+      const fileWindowId = `file-window-${fileId}`;
+      
+      // Check if window already exists
+      if (openWindows.has(fileWindowId)) {
+        const existingWindow = document.getElementById(fileWindowId);
+        if (existingWindow) {
+          existingWindow.style.zIndex = ++highestZIndex;
+          return;
+        } else {
+          // Window was closed/removed but still in Set - remove it
+          openWindows.delete(fileWindowId);
+        }
+      }
+
+      // Mark file as active in parent window
+      const fileListItem = document.querySelector(`.file-list-item[data-file-id="${fileId}"]`);
+      if (fileListItem) {
+        fileListItem.classList.add('active');
+      }
+
+      // Get file data
+      const fileData = document.querySelector(`.file-data[data-file-id="${fileId}"]`);
+      if (!fileData) {
+        console.error('No file data found for:', fileId);
+        return;
+      }
+
+      console.log('File data element:', fileData);
+      console.log('File data HTML:', fileData.innerHTML);
+
+      const contentBlocks = fileData.querySelectorAll('.content-block');
+      console.log(`Found ${contentBlocks.length} content blocks:`, contentBlocks);
+      
+      // Analyze content blocks and find largest media dimensions
+      let hasText = false;
+      let hasMedia = false;
+      let largestWidth = 0;
+      let largestHeight = 0;
+      let largestScale = 100;
+      
+      contentBlocks.forEach(block => {
+        const blockType = block.dataset.blockType;
+        console.log('Analyzing block:', blockType, block);
+        
+        if (blockType === 'text') {
+          hasText = true;
+        } else if (blockType === 'video') {
+          hasMedia = true;
+          const video = block.querySelector('video');
+          const scale = parseInt(block.dataset.scale) || 100;
+          if (video) {
+            const videoWidth = video.videoWidth || 800;
+            const videoHeight = video.videoHeight || 450;
+            const scaledWidth = videoWidth * (scale / 100);
+            const scaledHeight = videoHeight * (scale / 100);
+            
+            if (scaledWidth > largestWidth) {
+              largestWidth = scaledWidth;
+              largestHeight = scaledHeight;
+              largestScale = scale;
+            }
+          }
+        } else if (blockType === 'image') {
+          hasMedia = true;
+          const img = block.querySelector('img');
+          const scale = parseInt(block.dataset.scale) || 100;
+          if (img) {
+            const imgWidth = parseInt(img.getAttribute('width')) || img.naturalWidth || 800;
+            const imgHeight = parseInt(img.getAttribute('height')) || img.naturalHeight || 450;
+            const scaledWidth = imgWidth * (scale / 100);
+            const scaledHeight = imgHeight * (scale / 100);
+            
+            if (scaledWidth > largestWidth) {
+              largestWidth = scaledWidth;
+              largestHeight = scaledHeight;
+              largestScale = scale;
+            }
+          }
+        } else if (blockType === 'game') {
+          hasMedia = true;
+          // Check game type - Doom is 600x375 (16:10), others are 400x400
+          const gameType = block.dataset.gameType;
+          const gameWidth = (gameType === 'doomclone') ? 600 : 400;
+          const gameHeight = (gameType === 'doomclone') ? 375 : 400;
+          
+          if (gameWidth > largestWidth) {
+            largestWidth = gameWidth;
+            largestHeight = gameHeight;
+          }
+        }
+      });
+      
+      const mediaOnly = hasMedia && !hasText;
+
+      // Calculate initial window size
+      // Calculate max width: 100dvw - 2rem (converted to pixels)
+      const maxWidthDvw = window.innerWidth - (2 * 16); // 100dvw - 2rem
+      const minWidthPx = window.innerWidth * 0.15; // 15dvw minimum
+      
+      let initialWidth = 30; // 30rem default
+      let initialHeight = 20; // 20rem default
+      
+      if (hasMedia && largestWidth > 0) {
+        // Calculate window size based on largest media item
+        const remWidth = (largestWidth / 16) + 4; // +4rem for padding and borders
+        const remHeight = (largestHeight / 16) + 4 + 2.1875; // +4rem padding + title bar
+        
+        console.log('Window size calculation:');
+        console.log('  Canvas size:', largestWidth, 'x', largestHeight);
+        console.log('  Calculated rem:', remWidth, 'x', remHeight);
+        
+        // Clamp width to min/max constraints
+        const widthPx = Math.max(minWidthPx, Math.min(remWidth * 16, maxWidthDvw));
+        initialWidth = widthPx / 16;
+        initialHeight = Math.max(15, Math.min(remHeight, 50));
+        
+        console.log('  Final window (rem):', initialWidth, 'x', initialHeight);
+        console.log('  Final window (px):', initialWidth * 16, 'x', initialHeight * 16);
+      }
+
+      // Create file window HTML
+      const fileWindow = document.createElement('div');
+      fileWindow.id = fileWindowId;
+      fileWindow.className = 'folder-window file-window';
+      fileWindow.innerHTML = `
+        <div class="folder-window__inner">
+          <div class="folder-window__title-bar">
+            <span class="folder-window__title">${fileName}</span>
+            <div class="folder-window__controls">
+              <svg width="103" height="35" viewBox="0 0 102.5 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect class="control-btn minimize-btn" x="0.5" y="0.5" width="34" height="34" stroke="black"/>
+                <path d="M10 18H26" stroke="black" stroke-width="2"/>
+                <rect class="control-btn maximize-btn" x="34.5" y="0.5" width="34" height="34" fill="#EFEFEF" stroke="black"/>
+                <path d="M43 12H59" stroke="black" stroke-width="2"/>
+                <path d="M43 14H59" stroke="black" stroke-width="2"/>
+                <path d="M44 14V23" stroke="black" stroke-width="2"/>
+                <path d="M58 14V23" stroke="black" stroke-width="2"/>
+                <path d="M43 23H59" stroke="black" stroke-width="2"/>
+                <rect class="control-btn close-btn" x="68.5" y="0.5" width="34" height="34" stroke="black"/>
+                <path d="M80 23.3137L91.3137 12" stroke="black" stroke-width="2"/>
+                <path d="M80 12L91.3137 23.3137" stroke="black" stroke-width="2"/>
+              </svg>
+            </div>
+          </div>
+          <div class="folder-window__content">
+            <div class="file-window__content-wrapper">
+            </div>
+          </div>
+          <div class="resize-handle resize-handle-top"></div>
+          <div class="resize-handle resize-handle-right"></div>
+          <div class="resize-handle resize-handle-bottom"></div>
+          <div class="resize-handle resize-handle-left"></div>
+          <div class="resize-handle resize-handle-top-left"></div>
+          <div class="resize-handle resize-handle-top-right"></div>
+          <div class="resize-handle resize-handle-bottom-left"></div>
+          <div class="resize-handle resize-handle-bottom-right"></div>
+        </div>
+      `;
+
+      // Add to container
+      document.getElementById('file-windows-container').appendChild(fileWindow);
+
+      // Populate content after window is created (to avoid template literal issues)
+      const contentWrapper = fileWindow.querySelector('.file-window__content-wrapper');
+      contentWrapper.innerHTML = generateFileContent(contentBlocks, fileId);
+      
+      // Re-attach event listeners to all text blocks after setting innerHTML
+      const textDivs = contentWrapper.querySelectorAll('.file-window__text');
+      textDivs.forEach(textDiv => {
+        const blockId = textDiv.dataset.blockId;
+        textDiv.addEventListener('input', function() {
+          // Store edits in memory only - will reset on page refresh
+          window.editedTextContent[blockId] = {
+            content: this.innerHTML,
+            timestamp: Date.now()
+          };
+        });
+      });
+
+      // Initialize games - find all game containers that were created by generateGameHTML
+      console.log('ContentWrapper:', contentWrapper);
+      console.log('ContentWrapper HTML length:', contentWrapper.innerHTML.length);
+      
+      const gameContainers = contentWrapper.querySelectorAll('.file-window__game');
+      console.log('Found game containers:', gameContainers.length);
+      
+      gameContainers.forEach(gameContainer => {
+        const gameType = gameContainer.dataset.gameType;
+        console.log('Processing game container:', gameType);
+        console.log('Game container element:', gameContainer);
+        
+        // Find canvas within the game container
+        const canvas = gameContainer.querySelector('.game-canvas');
+        console.log('Found canvas:', canvas);
+        
+        if (canvas && gameType) {
+          // Small delay to ensure canvas is properly in DOM
+          setTimeout(() => {
+            console.log('Initializing game:', gameType, 'Canvas dimensions:', canvas.width, canvas.height);
+            initializeGame(canvas, gameType);
+          }, 100);
+        }
+      });
+
+      // Mark as open
+      openWindows.add(fileWindowId);
+
+      // Define strict boundaries first to constrain window size
+      const borderTop = ((1.375 + 2) * 16) * 2; // 108px - doubled to prevent header collision
+      const borderLeft = 16;
+      const borderRight = window.innerWidth - 16;
+      const borderBottom = window.innerHeight - 16;
+      
+      const maxAvailableWidth = borderRight - borderLeft;
+      const maxAvailableHeight = borderBottom - borderTop;
+
+      // Position near parent window with random offset
+      const parentRect = parentWindow.getBoundingClientRect();
+      let windowWidth = initialWidth * 16;
+      let windowHeight = initialHeight * 16;
+      
+      // Constrain window size to fit within viewport
+      if (windowWidth > maxAvailableWidth) {
+        windowWidth = maxAvailableWidth;
+        initialWidth = windowWidth / 16;
+      }
+      if (windowHeight > maxAvailableHeight) {
+        windowHeight = maxAvailableHeight;
+        initialHeight = windowHeight / 16;
+      }
+
+      const randomOffsetX = Math.floor(Math.random() * 100) - 50;
+      const randomOffsetY = Math.floor(Math.random() * 100) - 50;
+
+      let windowLeft = parentRect.right + 30 + randomOffsetX;
+      let windowTop = parentRect.top + 50 + randomOffsetY;
+
+      // Strictly constrain to boundaries
+      if (windowLeft + windowWidth > borderRight) {
+        windowLeft = parentRect.left - windowWidth - 30;
+      }
+      if (windowLeft < borderLeft) {
+        windowLeft = borderLeft;
+      }
+      if (windowLeft + windowWidth > borderRight) {
+        windowLeft = Math.max(borderLeft, borderRight - windowWidth);
+      }
+      if (windowTop < borderTop) {
+        windowTop = borderTop;
+      }
+      if (windowTop + windowHeight > borderBottom) {
+        windowTop = Math.max(borderTop, borderBottom - windowHeight);
+      }
+
+      fileWindow.style.left = windowLeft + 'px';
+      fileWindow.style.top = windowTop + 'px';
+      fileWindow.style.width = initialWidth + 'rem';
+      fileWindow.style.height = initialHeight + 'rem';
+      fileWindow.style.display = 'block';
+      fileWindow.style.zIndex = ++highestZIndex;
+
+      console.log('File window created:');
+      console.log('  ID:', fileWindowId);
+      console.log('  Style width:', fileWindow.style.width);
+      console.log('  Style height:', fileWindow.style.height);
+      console.log('  Computed width:', fileWindow.offsetWidth);
+      console.log('  Computed height:', fileWindow.offsetHeight);
+
+      // Setup interactions
+      makeWindowDraggable(fileWindow);
+      makeWindowResizable(fileWindow);
+      setupWindowControls(fileWindow, fileWindowId);
+      
+      // Debug canvas dimensions after window is created
+      setTimeout(() => {
+        const canvas = fileWindow.querySelector('.doom-canvas');
+        if (canvas) {
+          console.log('Doom canvas dimensions:');
+          console.log('  width attribute:', canvas.width);
+          console.log('  height attribute:', canvas.height);
+          console.log('  style.width:', canvas.style.width);
+          console.log('  style.height:', canvas.style.height);
+          console.log('  offsetWidth:', canvas.offsetWidth);
+          console.log('  offsetHeight:', canvas.offsetHeight);
+          console.log('  clientWidth:', canvas.clientWidth);
+          console.log('  clientHeight:', canvas.clientHeight);
+          
+          const computed = window.getComputedStyle(canvas);
+          console.log('  computed width:', computed.width);
+          console.log('  computed height:', computed.height);
+          console.log('  computed aspect-ratio:', computed.aspectRatio);
+        }
+      }, 100);
+    }
+
+    function generateFileContent(contentBlocks, fileId) {
+      if (contentBlocks.length === 0) {
+        return '<div class="file-window__empty">No content blocks found</div>';
+      }
+
+      let html = '';
+      
+      // Loop through content blocks in order
+      contentBlocks.forEach((block, index) => {
+        const blockType = block.dataset.blockType;
+        const blockId = `${fileId}-${blockType}-${index}`;
+        
+        console.log(`Block ${index}: type=${blockType}`, block);
+        
+        if (blockType === 'text') {
+          const textContent = block.querySelector('.block-text-content');
+          const fontFamily = block.dataset.fontFamily;
+          const fontSize = block.dataset.fontSize;
+          console.log('Text content element:', textContent, 'font:', fontFamily, 'size:', fontSize);
+          if (textContent) {
+            html += generateTextHTML(textContent, blockId, fontFamily, fontSize);
+          }
+        } else if (blockType === 'image') {
+          const imageContent = block.querySelector('.block-image-content');
+          const scale = parseInt(block.dataset.scale) || 100;
+          console.log('Image content element:', imageContent, 'scale:', scale);
+          if (imageContent) {
+            html += generateImageHTML(imageContent, scale);
+          } else {
+            console.warn('No .block-image-content found in image block');
+          }
+        } else if (blockType === 'video') {
+          const videoContent = block.querySelector('.block-video-content');
+          const scale = parseInt(block.dataset.scale) || 100;
+          console.log('Video content element:', videoContent, 'scale:', scale);
+          if (videoContent) {
+            html += generateVideoHTML(videoContent, scale);
+          } else {
+            console.warn('No .block-video-content found in video block');
+          }
+        } else if (blockType === 'game') {
+          const gameType = block.dataset.gameType;
+          const scale = parseInt(block.dataset.scale) || 100;
+          console.log('Game block:', gameType, 'scale:', scale);
+          html += generateGameHTML(gameType, blockId, scale);
+        }
+      });
+
+      return html;
+    }
+
+    function generateTextHTML(textContent, blockId, fontFamily, fontSize) {
+      const div = document.createElement('div');
+      div.className = 'file-window__text';
+      div.contentEditable = 'true';
+      div.dataset.blockId = blockId;
+      
+      console.log('[generateTextHTML] Input fontFamily:', fontFamily, 'fontSize:', fontSize);
+      
+      // Default to PS Interplanetary if no font specified
+      let font = (fontFamily && fontFamily !== '') ? fontFamily : 'PS Interplanetary, sans-serif';
+      
+      console.log('[generateTextHTML] After default check:', font);
+      
+      // If font doesn't include a fallback (no comma), add generic fallback
+      if (font && !font.includes(',')) {
+        font = `${font}, sans-serif`;
+      }
+      
+      console.log('[generateTextHTML] Final font value:', font);
+      
+      div.style.fontFamily = font;
+      
+      // Apply font size - default to 12.8px (0.8rem at 16px base)
+      const size = (fontSize && fontSize !== '') ? fontSize : '12.8';
+      div.style.fontSize = `${size}px`;
+      
+      console.log('[generateTextHTML] Applied to div - font:', div.style.fontFamily, 'size:', div.style.fontSize);
+      
+      const stored = window.editedTextContent[blockId];
+      let content = stored ? stored.content : null;
+      
+      if (!content) {
+        // Try to parse rich text JSON, fallback to plain text
+        try {
+          const richTextData = JSON.parse(textContent.textContent);
+          content = parseRichText(richTextData);
+        } catch (e) {
+          // Not JSON, use as plain text
+          content = textContent.textContent;
+        }
+      }
+      
+      div.innerHTML = content;
+      
+      return div.outerHTML;
+    }
+
+    function parseRichText(data) {
+      if (!data || !data.children) return '';
+      
+      return data.children.map(node => {
+        if (node.type === 'paragraph') {
+          const content = node.children?.map(child => {
+            if (child.type === 'text') {
+              let text = child.value || '';
+              if (child.bold) text = `<strong>${text}</strong>`;
+              if (child.italic) text = `<em>${text}</em>`;
+              return text;
+            }
+            return '';
+          }).join('') || '';
+          return `<p>${content}</p>`;
+        } else if (node.type === 'heading') {
+          const level = node.level || 2;
+          const content = node.children?.map(child => child.value || '').join('') || '';
+          return `<h${level}>${content}</h${level}>`;
+        } else if (node.type === 'list') {
+          const tag = node.listType === 'ordered' ? 'ol' : 'ul';
+          const items = node.children?.map(item => {
+            const itemContent = item.children?.map(child => child.value || '').join('') || '';
+            return `<li>${itemContent}</li>`;
+          }).join('') || '';
+          return `<${tag}>${items}</${tag}>`;
+        }
+        return '';
+      }).join('');
+    }
+
+    function generateImageHTML(imageContent, imageScale) {
+      const div = document.createElement('div');
+      div.className = 'file-window__image';
+      div.style.setProperty('--image-scale', imageScale);
+      div.innerHTML = imageContent.innerHTML;
+      return div.outerHTML;
+    }
+
+    function generateVideoHTML(videoContent, videoScale) {
+      const div = document.createElement('div');
+      div.className = 'file-window__video';
+      div.style.setProperty('--video-scale', videoScale);
+      div.innerHTML = videoContent.innerHTML;
+      return div.outerHTML;
+    }
+
+    function generateGameHTML(gameType, blockId, scale) {
+      const div = document.createElement('div');
+      div.className = 'file-window__game';
+      div.dataset.gameType = gameType;
+      div.dataset.blockId = blockId;
+      
+      // Doom requires larger canvas and different controls
+      if (gameType === 'doomclone') {
+        div.innerHTML = `
+          <div class="game-container">
+            <canvas class="game-canvas doom-canvas" width="600" height="375"></canvas>
+            <div class="game-info">Click to start. Move: WASD | Aim/Shoot: Mouse/Click</div>
+          </div>
+        `;
+      } else if (gameType === 'brickbreaker') {
+        div.innerHTML = `
+          <div class="game-container">
+            <canvas class="game-canvas" width="400" height="400"></canvas>
+            <div class="game-info game-controls-desktop">Use arrow keys to play</div>
+            <div class="game-info game-controls-mobile">Touch and drag to play</div>
+          </div>
+        `;
+      } else if (gameType === 'snake') {
+        div.innerHTML = `
+          <div class="game-container">
+            <canvas class="game-canvas" width="400" height="400"></canvas>
+            <div class="game-info game-controls-desktop">Use arrow keys to play</div>
+            <div class="game-info game-controls-mobile">Swipe to move</div>
+          </div>
+        `;
+      } else {
+        div.innerHTML = `
+          <div class="game-container">
+            <canvas class="game-canvas" width="400" height="400"></canvas>
+            <div class="game-info">Use arrow keys to play</div>
+          </div>
+        `;
+      }
+      
+      return div.outerHTML;
+    }
+
+    function makeWindowDraggable(windowEl) {
+      const titleBar = windowEl.querySelector('.folder-window__title-bar');
+      const controlsArea = windowEl.querySelector('.folder-window__controls');
+      let isDragging = false;
+      let startX, startY, currentLeft, currentTop;
+
+      titleBar.style.cursor = 'move';
+      
+      // Override cursor for controls area
+      if (controlsArea) {
+        controlsArea.style.cursor = 'default';
+      }
+
+      const handleWindowDragStart = (e) => {
+        if (e.target.closest('.folder-window__controls')) return;
+        
+        isDragging = true;
+        const touch = e.touches ? e.touches[0] : e;
+        startX = touch.clientX;
+        startY = touch.clientY;
+        
+        const rect = windowEl.getBoundingClientRect();
+        currentLeft = rect.left;
+        currentTop = rect.top;
+
+        windowEl.style.zIndex = ++highestZIndex;
+        
+        e.preventDefault();
+      };
+      
+      titleBar.addEventListener('mousedown', handleWindowDragStart);
+      titleBar.addEventListener('touchstart', handleWindowDragStart, { passive: false });
+
+      const handleWindowDragMove = (e) => {
+        if (!isDragging) return;
+
+        const touch = e.touches ? e.touches[0] : e;
+        const deltaX = touch.clientX - startX;
+        const deltaY = touch.clientY - startY;
+
+        let newX = currentLeft + deltaX;
+        let newY = currentTop + deltaY;
+
+        // Constrain to boundaries (matching body border) - recalculate each time for responsive resize
+        const remSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+        const borderTop = ((1.375 + 2) * remSize); // 3.375rem - normal header height for dragging
+        const borderLeft = 1 * remSize; // 1rem
+        const borderRight = (window.innerWidth * (window.visualViewport?.scale || 1)) - (1 * remSize); // 100dvw - 1rem
+        const borderBottom = (window.innerHeight * (window.visualViewport?.scale || 1)) - (1 * remSize); // 100dvh - 1rem
+
+        windowEl.style.left = newX + 'px';
+        windowEl.style.top = newY + 'px';
+
+        const windowRect = windowEl.getBoundingClientRect();
+
+        if (windowRect.left < borderLeft) {
+          newX = newX + (borderLeft - windowRect.left);
+        }
+        if (windowRect.right > borderRight) {
+          newX = newX - (windowRect.right - borderRight);
+        }
+        if (windowRect.top < borderTop) {
+          newY = newY + (borderTop - windowRect.top);
+        }
+        if (windowRect.bottom > borderBottom) {
+          newY = newY - (windowRect.bottom - borderBottom);
+        }
+
+        windowEl.style.left = newX + 'px';
+        windowEl.style.top = newY + 'px';
+      };
+      
+      document.addEventListener('mousemove', handleWindowDragMove);
+      document.addEventListener('touchmove', handleWindowDragMove, { passive: false });
+
+      const handleWindowDragEnd = () => {
+        if (isDragging) {
+          isDragging = false;
+        }
+      };
+      
+      document.addEventListener('mouseup', handleWindowDragEnd);
+      document.addEventListener('touchend', handleWindowDragEnd);
+
+      // Click/touch to bring to front
+      const bringToFront = (e) => {
+        if (!e.target.closest('.folder-window__controls')) {
+          windowEl.style.zIndex = ++highestZIndex;
+        }
+      };
+      
+      windowEl.addEventListener('mousedown', bringToFront);
+      windowEl.addEventListener('touchstart', bringToFront);
+    }
+
+    function makeWindowResizable(windowEl) {
+      const handles = windowEl.querySelectorAll('.resize-handle');
+      const minWidth = window.innerWidth * 0.15; // 15dvw minimum
+      const minHeight = window.innerHeight * 0.15; // 15dvh minimum
+      
+      handles.forEach(handle => {
+        let isResizing = false;
+        let startX, startY, startWidth, startHeight, startLeft, startTop;
+
+        handle.addEventListener('mousedown', (e) => {
+          isResizing = true;
+          startX = e.clientX;
+          startY = e.clientY;
+          
+          const rect = windowEl.getBoundingClientRect();
+          startWidth = rect.width;
+          startHeight = rect.height;
+          startLeft = rect.left;
+          startTop = rect.top;
+
+          windowEl.style.zIndex = ++highestZIndex;
+          
+          e.preventDefault();
+          e.stopPropagation();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+          if (!isResizing) return;
+
+          const deltaX = e.clientX - startX;
+          const deltaY = e.clientY - startY;
+
+          let newWidth = startWidth;
+          let newHeight = startHeight;
+          let newLeft = startLeft;
+          let newTop = startTop;
+
+          // Handle different resize directions
+          if (handle.classList.contains('resize-handle-right') || 
+              handle.classList.contains('resize-handle-top-right') || 
+              handle.classList.contains('resize-handle-bottom-right')) {
+            newWidth = Math.max(minWidth, startWidth + deltaX);
+          }
+          
+          if (handle.classList.contains('resize-handle-left') || 
+              handle.classList.contains('resize-handle-top-left') || 
+              handle.classList.contains('resize-handle-bottom-left')) {
+            newWidth = Math.max(minWidth, startWidth - deltaX);
+            if (newWidth > minWidth) {
+              newLeft = startLeft + deltaX;
+            }
+          }
+          
+          if (handle.classList.contains('resize-handle-bottom') || 
+              handle.classList.contains('resize-handle-bottom-left') || 
+              handle.classList.contains('resize-handle-bottom-right')) {
+            newHeight = Math.max(minHeight, startHeight + deltaY);
+          }
+          
+          if (handle.classList.contains('resize-handle-top') || 
+              handle.classList.contains('resize-handle-top-left') || 
+              handle.classList.contains('resize-handle-top-right')) {
+            newHeight = Math.max(minHeight, startHeight - deltaY);
+            if (newHeight > minHeight) {
+              newTop = startTop + deltaY;
+            }
+          }
+
+          // Calculate viewport boundaries
+          const viewportWidth = window.innerWidth;
+          const viewportHeight = window.innerHeight;
+          const borderTop = (1.375 + 2) * 16; // 54px
+          const borderLeft = 1 * 16; // 16px
+          const borderRight = viewportWidth - (1 * 16);
+          const borderBottom = viewportHeight - (1 * 16);
+
+          // Constrain position to boundaries
+          if (newLeft < borderLeft) {
+            newLeft = borderLeft;
+          }
+          if (newTop < borderTop) {
+            newTop = borderTop;
+          }
+
+          // Constrain size so window doesn't extend beyond boundaries
+          const maxWidth = borderRight - newLeft;
+          const maxHeight = borderBottom - newTop;
+          
+          if (newWidth > maxWidth) {
+            newWidth = maxWidth;
+          }
+          if (newHeight > maxHeight) {
+            newHeight = maxHeight;
+          }
+
+          // Apply new dimensions
+          windowEl.style.width = newWidth + 'px';
+          windowEl.style.height = newHeight + 'px';
+          windowEl.style.left = newLeft + 'px';
+          windowEl.style.top = newTop + 'px';
+        });
+
+        document.addEventListener('mouseup', () => {
+          if (isResizing) {
+            isResizing = false;
+          }
+        });
+      });
+    }
+
+    function setupWindowControls(windowEl, windowId) {
+      const controls = windowEl.querySelector('.folder-window__controls svg');
+      
+      // Close button - make entire rect clickable
+      const closeBtnRect = controls.querySelector('.close-btn');
+      closeBtnRect.style.cursor = 'pointer';
+      closeBtnRect.style.fill = 'transparent';
+      closeBtnRect.addEventListener('click', (e) => {
+        e.stopPropagation();
+        
+        // Only proceed if window is actually visible
+        if (windowEl.style.display === 'none') return;
+        
+        // Visual feedback - black fill with white icon, keep border black
+        closeBtnRect.style.fill = '#000000';
+        closeBtnRect.style.stroke = 'black';
+        const closePaths = controls.querySelectorAll('.close-btn ~ path');
+        closePaths.forEach(path => path.style.stroke = '#FFFFFF');
+        
+        // Delay closing to show the visual feedback
+        setTimeout(() => {
+          closeBtnRect.style.fill = 'transparent';
+          closeBtnRect.style.stroke = 'black';
+          closePaths.forEach(path => path.style.stroke = 'black');
+          
+          // Clean up Doom game if running
+          if (window.doomRunning) {
+            console.log('Stopping Doom game...');
+            
+            // Stop animation frame
+            if (window.frame) {
+              cancelAnimationFrame(window.frame);
+              window.frame = null;
+            }
+            
+            // Mark game as ended to stop game loop
+            window.end_screen = true;
+            window.doomRunning = false;
+            
+            // CRITICAL: Reset initialization flag so next open is treated as first run
+            window.doomInitialized = false;
+            console.log('Reset Doom initialization flag for fresh restart');
+            
+            // Remove the old canvas ID so it doesn't conflict with new instances
+            const oldCanvas = document.getElementById('cQ');
+            if (oldCanvas) {
+              oldCanvas.id = '';
+              console.log('Removed ID from old Doom canvas');
+            }
+            
+            // Clear the global canvas reference
+            window.cQ = null;
+            window.gl = null;
+            
+            // Stop all audio - more aggressive approach
+            try {
+              // Stop any playing audio sources
+              if (window.AudioContext || window.webkitAudioContext) {
+                const contexts = [window.a, window.audioCtx, window.audioContext];
+                contexts.forEach(ctx => {
+                  if (ctx && typeof ctx.close === 'function') {
+                    ctx.close().catch(e => console.warn('Error closing audio:', e));
+                  }
+                });
+                window.a = null;
+                window.audioCtx = null;
+                window.audioContext = null;
+              }
+              
+              // Stop music specifically
+              if (window.music_playing) {
+                window.music_playing = false;
+              }
+              if (window.can_play_music) {
+                window.can_play_music = false;
+              }
+            } catch(e) {
+              console.warn('Error stopping audio:', e);
+            }
+            
+            // Exit pointer lock
+            if (document.pointerLockElement) {
+              document.exitPointerLock();
+            }
+            
+            // Reset Doom UI elements (don't remove them - just hide/reset)
+            const hQ = document.getElementById('hQ');
+            const hE = document.getElementById('hE');
+            if (hQ) hQ.style.display = 'none';
+            if (hE) hE.innerHTML = '';
+            
+            // Remove map editor debug panel
+            const debugPanels = document.querySelectorAll('body > div[style*="position: absolute"][style*="left: 850px"]');
+            debugPanels.forEach(panel => panel.remove());
+          }
+          
+          windowEl.style.display = 'none';
+          openWindows.delete(windowId);
+          
+          // Remove active state from file list item if this is a file window
+          if (windowId.startsWith('file-window-')) {
+            const fileId = windowId.replace('file-window-', '');
+            const fileListItem = document.querySelector(`.file-list-item[data-file-id="${fileId}"]`);
+            if (fileListItem) {
+              fileListItem.classList.remove('active');
+            }
+          }
+          
+          // Reset all size and position data
+          delete windowEl.dataset.maximized;
+          delete windowEl.dataset.originalWidth;
+          delete windowEl.dataset.originalHeight;
+          delete windowEl.dataset.originalLeft;
+          delete windowEl.dataset.originalTop;
+          
+          // Reset minimized state
+          delete windowEl.dataset.minimized;
+          delete windowEl.dataset.restoreWidth;
+          delete windowEl.dataset.restoreHeight;
+          delete windowEl.dataset.restoreLeft;
+          delete windowEl.dataset.restoreTop;
+          windowEl.classList.remove('minimized');
+          
+          // Reset to default size
+          windowEl.style.width = '60.5625rem';
+          windowEl.style.height = '';
+          windowEl.style.bottom = '';
+          
+          // Show content area
+          const contentArea = windowEl.querySelector('.folder-window__content') || windowEl.querySelector('.file-window__content-wrapper');
+          if (contentArea) contentArea.style.display = 'block';
+        }, 100);
+      });
+
+      // Minimize button - make entire rect clickable
+      const minimizeBtnRect = controls.querySelector('.minimize-btn');
+      const minimizePath = controls.querySelector('.minimize-btn ~ path');
+      minimizeBtnRect.style.cursor = 'pointer';
+      minimizeBtnRect.style.fill = 'transparent';
+      minimizeBtnRect.addEventListener('click', (e) => {
+        e.stopPropagation();
+        
+        // Check if already minimized
+        const isMinimized = windowEl.classList.contains('minimized');
+        
+        if (isMinimized) {
+          // Restore - show content and reset button style
+          const contentArea = windowEl.querySelector('.folder-window__content') || windowEl.querySelector('.file-window__content-wrapper');
+          if (contentArea) contentArea.style.display = '';
+          
+          minimizeBtnRect.style.fill = 'transparent';
+          minimizeBtnRect.style.stroke = 'black';
+          minimizePath.style.stroke = 'black';
+          windowEl.classList.remove('minimized');
+        } else {
+          // Minimize - hide content and keep button with black fill and white icon
+          const contentArea = windowEl.querySelector('.folder-window__content') || windowEl.querySelector('.file-window__content-wrapper');
+          if (contentArea) contentArea.style.display = 'none';
+          
+          minimizeBtnRect.style.fill = '#000000';
+          minimizeBtnRect.style.stroke = 'black';
+          minimizePath.style.stroke = '#FFFFFF';
+          windowEl.classList.add('minimized');
+        }
+      });
+
+      // Maximize button - make entire rect clickable
+      const maximizeBtnRect = controls.querySelector('.maximize-btn');
+      const maximizePaths = Array.from(controls.querySelectorAll('.maximize-btn ~ path')).slice(0, 5);
+      maximizeBtnRect.style.cursor = 'pointer';
+      maximizeBtnRect.style.fill = 'transparent';
+      maximizeBtnRect.addEventListener('click', (e) => {
+        e.stopPropagation();
+        
+        // If minimized, restore first and reset minimize button
+        if (windowEl.classList.contains('minimized')) {
+          const contentArea = windowEl.querySelector('.folder-window__content') || windowEl.querySelector('.file-window__content-wrapper');
+          if (contentArea) contentArea.style.display = '';
+          windowEl.classList.remove('minimized');
+          
+          // Reset minimize button appearance
+          minimizeBtnRect.style.fill = 'transparent';
+          minimizeBtnRect.style.stroke = 'black';
+          minimizePath.style.stroke = 'black';
+        }
+        
+        // Check if already maximized
+        const isMaximized = windowEl.dataset.maximized === 'true';
+        
+        if (isMaximized) {
+          // Restore original size and position
+          windowEl.style.width = windowEl.dataset.originalWidth;
+          windowEl.style.height = windowEl.dataset.originalHeight;
+          windowEl.style.left = windowEl.dataset.originalLeft;
+          windowEl.style.top = windowEl.dataset.originalTop;
+          windowEl.style.bottom = ''; // Clear bottom positioning
+          windowEl.dataset.maximized = 'false';
+          
+          // Reset button appearance
+          maximizeBtnRect.style.fill = 'transparent';
+          maximizeBtnRect.style.stroke = 'black';
+          maximizePaths.forEach(path => path.style.stroke = 'black');
+        } else {
+          // Store original dimensions and position
+          const rect = windowEl.getBoundingClientRect();
+          windowEl.dataset.originalWidth = rect.width + 'px';
+          windowEl.dataset.originalHeight = rect.height + 'px';
+          windowEl.dataset.originalLeft = rect.left + 'px';
+          windowEl.dataset.originalTop = rect.top + 'px';
+          
+          // Calculate body border boundaries
+          const borderLeft = 16;
+          const borderRight = window.innerWidth - 16;
+          const borderBottom = 16; // Bottom border
+          const borderTop = ((1.375 + 2) * 16 * 2); // 54px header
+          
+          // Maximize to fill body border area - anchor to bottom
+          const maxWidth = borderRight - borderLeft;
+          const maxHeight = window.innerHeight - borderTop - borderBottom; // Total viewport minus top header minus bottom border
+          
+          windowEl.style.left = borderLeft + 'px';
+          windowEl.style.top = ''; // Clear top positioning
+          windowEl.style.bottom = borderBottom + 'px'; // Anchor to bottom border
+          windowEl.style.width = maxWidth + 'px';
+          windowEl.style.height = maxHeight + 'px';
+          windowEl.dataset.maximized = 'true';
+          
+          // Keep button active (black fill with white icon)
+          maximizeBtnRect.style.fill = '#000000';
+          maximizeBtnRect.style.stroke = 'black';
+          maximizePaths.forEach(path => path.style.stroke = '#FFFFFF');
+        }
+      });
+      
+      // Reset maximize button when window is resized manually (dragging edges)
+      // This will be triggered by the resize observer or drag interactions
+      windowEl.addEventListener('manualresize', () => {
+        if (windowEl.dataset.maximized === 'true') {
+          windowEl.dataset.maximized = 'false';
+          maximizeBtnRect.style.fill = 'transparent';
+          maximizeBtnRect.style.stroke = 'black';
+          maximizePaths.forEach(path => path.style.stroke = 'black');
+        }
+      });
+    }
+  }
+
+  // Constrain all elements to boundaries on window resize
+  window.addEventListener('resize', () => {
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const borderTop = ((1.375 + 2) * 16) * 2; // 108px - doubled to prevent header collision
+    const borderLeft = 1 * 16; // 16px
+    const borderRight = viewportWidth - (1 * 16);
+    const borderBottom = viewportHeight - (1 * 16);
+    
+    // Constrain all folders
+    const folders = document.querySelectorAll('.folder-icon');
+    folders.forEach(folder => {
+      if (folder.style.position === 'fixed') {
+        const rect = folder.getBoundingClientRect();
+        let left = rect.left;
+        let top = rect.top;
+        
+        // Push back into bounds if outside
+        if (rect.left < borderLeft) {
+          left = borderLeft;
+        }
+        if (rect.right > borderRight) {
+          left = borderRight - rect.width;
+        }
+        if (rect.top < borderTop) {
+          top = borderTop;
+        }
+        if (rect.bottom > borderBottom) {
+          top = borderBottom - rect.height;
+        }
+        
+        folder.style.left = left + 'px';
+        folder.style.top = top + 'px';
+      }
+    });
+    
+    // Constrain all windows
+    const windows = document.querySelectorAll('.folder-window, .file-window');
+    windows.forEach(windowEl => {
+      if (windowEl.style.position === 'fixed' && windowEl.style.display !== 'none') {
+        const rect = windowEl.getBoundingClientRect();
+        let left = rect.left;
+        let top = rect.top;
+        
+        // Push back into bounds if outside
+        if (rect.left < borderLeft) {
+          left = borderLeft;
+        }
+        if (rect.right > borderRight) {
+          left = borderRight - rect.width;
+        }
+        if (rect.top < borderTop) {
+          top = borderTop;
+        }
+        if (rect.bottom > borderBottom) {
+          top = borderBottom - rect.height;
+        }
+        
+        windowEl.style.left = left + 'px';
+        windowEl.style.top = top + 'px';
+      }
+    });
+  });
+
+  // Initialize on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeArchive);
+  } else {
+    initializeArchive();
+  }
+
+  // Reinitialize when theme editor updates
+  if (window.Shopify && window.Shopify.designMode) {
+    document.addEventListener('shopify:section:load', initializeArchive);
+    document.addEventListener('shopify:section:reorder', initializeArchive);
+  }
+
+  // Game initialization function
+  function initializeGame(canvas, gameType) {
+    // Wait for external game script to load
+    if (typeof window.ArchiveGames !== 'undefined') {
+      window.ArchiveGames.init(canvas, gameType);
+    } else {
+      // Fallback if script hasn't loaded yet
+      setTimeout(() => initializeGame(canvas, gameType), 100);
+    }
+  }
+{% endjavascript %}
+
+<!-- ========== CUSTOM FONTS DEBUG START ========== -->
+<!-- Total custom fonts found: {{ shop.metaobjects.custom_font.values | size }} -->
+{% for font in shop.metaobjects.custom_font.values %}
+  <!-- Font #{{ forloop.index }}: name="{{ font.font_name }}" file="{{ font.font_file }}" -->
+  <!-- Font #{{ forloop.index }}: file_url="{{ font.font_file | file_url }}" -->
+{% endfor %}
+<!-- ========== CUSTOM FONTS DEBUG END ========== -->
+
+{% stylesheet %}
+  /* Custom Fonts - Load from metaobjects */
+  /* DEBUG: Total custom fonts found: {{ shop.metaobjects.custom_font.values | size }} */
+  {% for font in shop.metaobjects.custom_font.values %}
+    /* DEBUG: Font object - name: {{ font.font_name }}, file: {{ font.font_file }} */
+    {% if font.font_name != blank and font.font_file != blank %}
+    /* DEBUG: Loading font {{ font.font_name }} from metaobject */
+    @font-face {
+      font-family: '{{ font.font_name }}';
+      src: url('{{ font.font_file | file_url }}') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+    {% endif %}
+  {% endfor %}
+
+  .archive {
+    width: calc(100dvw - 2rem);
+    height: calc(100dvh - 4.375rem);
+    margin: calc(1.375rem + 2rem) 1rem 1rem 1rem;
+    position: relative;
+    overflow: hidden;
+    
+    /* Prevent any scrolling or elastic overflow */
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Custom text selection color for archive page */
+  .archive ::selection {
+    background: #8FFF00;
+    color: #000000;
+  }
+
+  .archive ::-moz-selection {
+    background: #8FFF00;
+    color: #000000;
+  }
+  
+  .archive-content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  
+  .archive-folders {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 120px));
+    gap: 1.75rem;
+    justify-content: start;
+    align-content: start;
+  }
+  
+  @media (max-width: 768px) {
+    .archive-folders {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem 1rem;
+    }
+  }
+
+  /* Folder Windows */
+  .folder-window {
+    position: fixed;
+    width: 40rem;
+    max-width: calc(100vw - 2rem);
+    height: 22rem;
+    background: #FFFFFF;
+    border: 1px solid #000;
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+    font-family: 'PS Interplanetary';
+    z-index: 50;
+  }
+
+  .folder-window__inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .folder-window__title-bar {
+    width: 100%;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 0.33rem;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    background: #EFEFEF;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    margin-top: -1px;
+    margin-right: -1px;
+  }
+
+  .folder-window__title {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #000;
+    user-select: none;
+  }
+
+  .folder-window__controls {
+    width: 4.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+    line-height: 0;
+    cursor: default !important;
+    margin-right: -1px;
+  }
+
+  .folder-window__controls svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    vertical-align: top;
+    pointer-events: none;
+  }
+
+  .folder-window__controls .control-btn {
+    cursor: pointer !important;
+    transition: fill 0.1s;
+    pointer-events: all;
+  }
+
+  .folder-window__controls .control-btn:hover {
+    fill: #D3D3D3;
+  }
+
+  .folder-window__controls .control-btn:active {
+    fill: #808080;
+  }
+
+  .folder-window__content {
+    background: #FFFFFF;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1 1 0;
+    min-height: 0;
+    max-height: 100%;
+    padding: 3px 4px 3px 3px;
+    box-sizing: border-box;
+    border: 4px solid #D9D9D9;
+  }
+
+  .folder-window__file-list {
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    padding-left: 0.33rem;
+  }
+
+  /* Windows 95 style scrollbar */
+  /* Firefox */
+  .folder-window__content,
+  .file-window__content-wrapper {
+    scrollbar-width: thin;
+    scrollbar-color: #C0C0C0 #FFFFFF;
+  }
+  
+  /* Chromium browsers (Chrome, Edge, Safari) */
+  .folder-window__content::-webkit-scrollbar,
+  .file-window__content-wrapper::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  .folder-window__content::-webkit-scrollbar-track,
+  .file-window__content-wrapper::-webkit-scrollbar-track {
+    background: #FFFFFF;
+    border-left: 1px solid #000;
+  }
+
+  .folder-window__content::-webkit-scrollbar-thumb,
+  .file-window__content-wrapper::-webkit-scrollbar-thumb {
+    background: #C0C0C0;
+    border: 1px solid #000;
+    border-top: 2px solid #FFFFFF;
+    border-left: 2px solid #FFFFFF;
+    border-right: 2px solid #808080;
+    border-bottom: 2px solid #808080;
+  }
+
+  .folder-window__content::-webkit-scrollbar-thumb:hover,
+  .file-window__content-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #B0B0B0;
+  }
+
+  .folder-window__empty-state {
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #666;
+  }
+
+  /* Resize Handles */
+  .resize-handle {
+    position: absolute;
+    z-index: 10;
+    pointer-events: all;
+  }
+
+  .resize-handle-top {
+    top: 0;
+    left: 5px;
+    right: 5px;
+    height: 5px;
+    cursor: ns-resize;
+  }
+
+  .resize-handle-bottom {
+    bottom: 0;
+    left: 5px;
+    right: 5px;
+    height: 5px;
+    cursor: ns-resize;
+  }
+
+  .resize-handle-left {
+    left: 0;
+    top: 5px;
+    bottom: 5px;
+    width: 5px;
+    cursor: ew-resize;
+  }
+
+  .resize-handle-right {
+    right: 0;
+    top: 5px;
+    bottom: 5px;
+    width: 5px;
+    cursor: ew-resize;
+  }
+
+  .resize-handle-top-left {
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    cursor: nwse-resize;
+  }
+
+  .resize-handle-top-right {
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    cursor: nesw-resize;
+  }
+
+  .resize-handle-bottom-left {
+    bottom: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    cursor: nesw-resize;
+  }
+
+  .resize-handle-bottom-right {
+    bottom: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    cursor: nwse-resize;
+  }
+
+  /* Minimized window state */
+  .folder-window.minimized {
+    height: 35px !important;
+    cursor: default;
+    transition: height 0.2s ease;
+  }
+
+  .folder-window.minimized .folder-window__inner {
+    border: none;
+  }
+
+  .folder-window.minimized .folder-window__title-bar {
+    cursor: move !important;
+    border: none;
+  }
+
+  .file-list-item {
+    height: 1.375rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.1rem 0.1rem 0 0;
+    leading-trim: both;
+    text-edge: cap;
+    font-family: "PS Interplanetary", sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: -0.025rem;
+    color: #000;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.05s;
+  }
+
+  .file-list-item:nth-child(odd) {
+    background: #FFFFFF;
+  }
+
+  .file-list-item:nth-child(even) {
+    background: #EFEFEF;
+  }
+
+  .file-list-item:hover {
+    background: #000000 !important;
+    color: #FFFFFF;
+  }
+
+  .file-list-item.active {
+    background: #000000 !important;
+    color: #FFFFFF;
+  }
+  .file-list-item__name {
+    width: 80%;
+    height: 100$;
+    height: 1.375rem;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .file-list-item__timestamp {
+    width: 10rem;
+    height 100%;
+    max-height: 1.375rem;
+    line-height: 1.375rem;
+    text-align: left;
+    margin-left: 2rem;
+    padding-right: 4rem;
+    white-space: nowrap;
+  }
+
+  /* File Windows */
+  .file-window {
+    width: 30rem;
+    height: 20rem;
+    z-index: 50;
+  }
+
+  .file-window__content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .file-window__text {
+    padding: 1rem;
+    background: #FFFFFF;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #000000;
+    outline: none;
+    cursor: text;
+  }
+  
+  .file-window__text:focus {
+    outline: none;
+  }
+
+  .file-window__image {
+    padding: 1rem;
+    background: #FFFFFF;
+    display: block;
+  }
+
+  .file-window__image img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    transform: scale(calc(var(--image-scale) / 100));
+    transform-origin: center;
+  }
+
+  .file-window__video {
+    padding: 1rem;
+    background: #FFFFFF;
+    display: block;
+  }
+
+  .file-window__video video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    transform: scale(calc(var(--video-scale) / 100));
+    transform-origin: center;
+  }
+
+  /* File Window Game Styles */
+  .file-window__game {
+    padding: 1rem;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .game-canvas {
+    border: 3px solid #8FFF00;
+    background: #000;
+    image-rendering: pixelated;
+    cursor: pointer;
+    display: block;
+  }
+
+  .game-canvas:focus {
+    outline: 3px solid #8FFF00;
+    outline-offset: 3px;
+  }
+
+  .game-info {
+    color: #8FFF00;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  /* Game Block Styles */
+  .block-game-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: #000;
+    border-radius: 4px;
+  }
+
+  .game-header {
+    color: #8FFF00;
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .game-canvas {
+    border: 2px solid #8FFF00;
+    background: #000;
+    image-rendering: pixelated;
+    cursor: pointer;
+  }
+
+  .game-canvas:focus {
+    outline: 2px solid #8FFF00;
+    outline-offset: 2px;
+  }
+
+  .game-controls {
+    color: #8FFF00;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  
+  /* Show/hide controls based on device */
+  .game-controls-mobile,
+  .game-info.game-controls-mobile {
+    display: none;
+  }
+  
+  @media (max-width: 768px) {
+    .game-controls-desktop,
+    .game-info.game-controls-desktop {
+      display: none;
+    }
+    .game-controls-mobile,
+    .game-info.game-controls-mobile {
+      display: block;
+    }
+  }
+
+  /* Doom-specific canvas styling */
+  .doom-canvas {
+    /* High-res 1600x1000 canvas scaled down to 600x375 for crisp display */
+    width: 600px !important;
+    height: 375px !important;
+    max-width: 600px !important;
+    max-height: 375px !important;
+    aspect-ratio: 16 / 10 !important;
+    object-fit: contain !important;
+    display: block;
+  }
+  
+  /* Hide Doom debug elements */
+  #fps,
+  #hE,
+  #hQ,
+  #qQ {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  
+  /* Hide Doom map editor panel - try multiple selectors */
+  body > div[style*="position: absolute"][style*="left: 850px"],
+  div[style*="position: absolute"][style*="left: 850px"],
+  canvas#hQ,
+  canvas#qQ {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  .file-window__empty {
+    padding: 2rem;
+    text-align: center;
+    color: #666;
+    font-style: italic;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Archive",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "gradient_start",
+      "label": "Gradient start",
+      "default": "#0000FF"
+    },
+    {
+      "type": "color",
+      "id": "gradient_end",
+      "label": "Gradient end",
+      "default": "#000099"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Archive"
+    }
+  ]
+}
+{% endschema %}
+

@@ -1,0 +1,261 @@
+/* ── Reset & Body ─────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-image: url('assets/background.png');
+  background-size: cover;
+  background-position: center;
+  font-family: 'PS Interplanetary', 'Courier New', monospace;
+}
+
+/* ── Desktop Icons ────────────────────────────────────────────────────────── */
+.desktop-icon {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80px;
+  cursor: pointer;
+  user-select: none;
+  z-index: 10;
+}
+
+.desktop-icon img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  pointer-events: none;
+}
+
+.desktop-icon__label {
+  font-size: 12px;
+  color: #ffffff;
+  text-align: center;
+  /* Outline effect so text is readable on any background */
+  text-shadow:
+    1px  1px 2px #000,
+   -1px -1px 2px #000,
+    1px -1px 2px #000,
+   -1px  1px 2px #000;
+  margin-top: 4px;
+  pointer-events: none;
+}
+
+/* ── Folder Windows ───────────────────────────────────────────────────────── */
+.folder-window {
+  position: fixed;
+  width: 40rem;
+  max-width: calc(100vw - 2rem);
+  height: 22rem;
+  background: #FFFFFF;
+  border: 1px solid #000;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+  font-family: 'PS Interplanetary', 'Courier New', monospace;
+  z-index: 50;
+}
+
+.folder-window__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.folder-window__title-bar {
+  width: 100%;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 0.33rem;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  background: #EFEFEF;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  margin-top: -1px;
+  margin-right: -1px;
+}
+
+.folder-window__title {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #000;
+  user-select: none;
+}
+
+.folder-window__controls {
+  width: 4.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  line-height: 0;
+  cursor: default !important;
+  margin-right: -1px;
+}
+
+.folder-window__controls svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  vertical-align: top;
+  pointer-events: none;
+}
+
+.folder-window__controls .control-btn {
+  cursor: pointer !important;
+  transition: fill 0.1s;
+  pointer-events: all;
+}
+
+.folder-window__controls .control-btn:hover {
+  fill: #D3D3D3;
+}
+
+.folder-window__controls .control-btn:active {
+  fill: #808080;
+}
+
+.folder-window__content {
+  background: #FFFFFF;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1 1 0;
+  min-height: 0;
+  max-height: 100%;
+  padding: 3px 4px 3px 3px;
+  box-sizing: border-box;
+  border: 4px solid #D9D9D9;
+}
+
+.folder-window__content p {
+  font-size: 0.8rem;
+  color: #000;
+  padding: 0.5rem;
+  margin: 0;
+}
+
+/* Windows 95-style scrollbar — Firefox */
+.folder-window__content {
+  scrollbar-width: thin;
+  scrollbar-color: #C0C0C0 #FFFFFF;
+}
+
+/* Windows 95-style scrollbar — Chromium */
+.folder-window__content::-webkit-scrollbar {
+  width: 16px;
+}
+
+.folder-window__content::-webkit-scrollbar-track {
+  background: #FFFFFF;
+  border-left: 1px solid #000;
+}
+
+.folder-window__content::-webkit-scrollbar-thumb {
+  background: #C0C0C0;
+  border: 1px solid #000;
+  border-top: 2px solid #FFFFFF;
+  border-left: 2px solid #FFFFFF;
+  border-right: 2px solid #808080;
+  border-bottom: 2px solid #808080;
+}
+
+.folder-window__content::-webkit-scrollbar-thumb:hover {
+  background: #B0B0B0;
+}
+
+/* ── Minimized State ──────────────────────────────────────────────────────── */
+.folder-window.minimized {
+  height: 35px !important;
+  cursor: default;
+  transition: height 0.2s ease;
+}
+
+.folder-window.minimized .folder-window__inner {
+  border: none;
+}
+
+.folder-window.minimized .folder-window__title-bar {
+  cursor: move !important;
+  border: none;
+}
+
+/* ── Resize Handles ───────────────────────────────────────────────────────── */
+.resize-handle {
+  position: absolute;
+  z-index: 10;
+  pointer-events: all;
+}
+
+.resize-handle-top {
+  top: 0;
+  left: 5px;
+  right: 5px;
+  height: 5px;
+  cursor: ns-resize;
+}
+
+.resize-handle-bottom {
+  bottom: 0;
+  left: 5px;
+  right: 5px;
+  height: 5px;
+  cursor: ns-resize;
+}
+
+.resize-handle-left {
+  left: 0;
+  top: 5px;
+  bottom: 5px;
+  width: 5px;
+  cursor: ew-resize;
+}
+
+.resize-handle-right {
+  right: 0;
+  top: 5px;
+  bottom: 5px;
+  width: 5px;
+  cursor: ew-resize;
+}
+
+.resize-handle-top-left {
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  cursor: nwse-resize;
+}
+
+.resize-handle-top-right {
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  cursor: nesw-resize;
+}
+
+.resize-handle-bottom-left {
+  bottom: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  cursor: nesw-resize;
+}
+
+.resize-handle-bottom-right {
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  cursor: nwse-resize;
+}

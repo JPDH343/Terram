@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terram</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ── Desktop Icons ─────────────────────────────────────── -->
+  <div class="desktop-icon" data-window="maps">
+    <img src="assets/icons/maps.png" alt="Maps">
+    <span class="desktop-icon__label">maps</span>
+  </div>
+
+  <div class="desktop-icon" data-window="journal">
+    <img src="assets/icons/journal.png" alt="Journal">
+    <span class="desktop-icon__label">journal</span>
+  </div>
+
+  <div class="desktop-icon" data-window="friends-list">
+    <img src="assets/icons/friends-list.png" alt="Friends List">
+    <span class="desktop-icon__label">friends list</span>
+  </div>
+
+  <div class="desktop-icon" data-window="sunseeker">
+    <img src="assets/icons/sunseeker.png" alt="Sunseeker">
+    <span class="desktop-icon__label">sunseeker</span>
+  </div>
+
+  <!-- ── Window: Maps ──────────────────────────────────────── -->
+  <div id="window-maps" class="folder-window" style="display: none;">
+    <div class="folder-window__inner">
+      <div class="folder-window__title-bar">
+        <span class="folder-window__title">Maps</span>
+        <div class="folder-window__controls">
+          <svg width="103" height="35" viewBox="0 0 102.5 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect class="control-btn minimize-btn" x="0.5" y="0.5" width="34" height="34" stroke="black"/>
+            <path d="M10 18H26" stroke="black" stroke-width="2"/>
+            <rect class="control-btn maximize-btn" x="34.5" y="0.5" width="34" height="34" fill="#EFEFEF" stroke="black"/>
+            <path d="M43 12H59" stroke="black" stroke-width="2"/>
+            <path d="M43 14H59" stroke="black" stroke-width="2"/>
+            <path d="M44 14V23" stroke="black" stroke-width="2"/>
+            <path d="M58 14V23" stroke="black" stroke-width="2"/>
+            <path d="M43 23H59" stroke="black" stroke-width="2"/>
+            <rect class="control-btn close-btn" x="68.5" y="0.5" width="34" height="34" stroke="black"/>
+            <path d="M80 23.3137L91.3137 12" stroke="black" stroke-width="2"/>
+            <path d="M80 12L91.3137 23.3137" stroke="black" stroke-width="2"/>
+          </svg>
+        </div>
+      </div>
+      <div class="folder-window__content">
+        <p>Maps content coming soon.</p>
+      </div>
+      <div class="resize-handle resize-handle-top"></div>
+      <div class="resize-handle resize-handle-right"></div>
+      <div class="resize-handle resize-handle-bottom"></div>
+      <div class="resize-handle resize-handle-left"></div>
+      <div class="resize-handle resize-handle-top-left"></div>
+      <div class="resize-handle resize-handle-top-right"></div>
+      <div class="resize-handle resize-handle-bottom-left"></div>
+      <div class="resize-handle resize-handle-bottom-right"></div>
+    </div>
+  </div>
+
+  <!-- ── Window: Journal ───────────────────────────────────── -->
+  <div id="window-journal" class="folder-window" style="display: none;">
+    <div class="folder-window__inner">
+      <div class="folder-window__title-bar">
+        <span class="folder-window__title">Journal</span>
+        <div class="folder-window__controls">
+          <svg width="103" height="35" viewBox="0 0 102.5 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect class="control-btn minimize-btn" x="0.5" y="0.5" width="34" height="34" stroke="black"/>
+            <path d="M10 18H26" stroke="black" stroke-width="2"/>
+            <rect class="control-btn maximize-btn" x="34.5" y="0.5" width="34" height="34" fill="#EFEFEF" stroke="black"/>
+            <path d="M43 12H59" stroke="black" stroke-width="2"/>
+            <path d="M43 14H59" stroke="black" stroke-width="2"/>
+            <path d="M44 14V23" stroke="black" stroke-width="2"/>
+            <path d="M58 14V23" stroke="black" stroke-width="2"/>
+            <path d="M43 23H59" stroke="black" stroke-width="2"/>
+            <rect class="control-btn close-btn" x="68.5" y="0.5" width="34" height="34" stroke="black"/>
+            <path d="M80 23.3137L91.3137 12" stroke="black" stroke-width="2"/>
+            <path d="M80 12L91.3137 23.3137" stroke="black" stroke-width="2"/>
+          </svg>
+        </div>
+      </div>
+      <div class="folder-window__content">
+        <p>Journal content coming soon.</p>
+      </div>
+      <div class="resize-handle resize-handle-top"></div>
+      <div class="resize-handle resize-handle-right"></div>
+      <div class="resize-handle resize-handle-bottom"></div>
+      <div class="resize-handle resize-handle-left"></div>
+      <div class="resize-handle resize-handle-top-left"></div>
+      <div class="resize-handle resize-handle-top-right"></div>
+      <div class="resize-handle resize-handle-bottom-left"></div>
+      <div class="resize-handle resize-handle-bottom-right"></div>
+    </div>
+  </div>
+
+  <!-- ── Window: Friends List ──────────────────────────────── -->
+  <div id="window-friends-list" class="folder-window" style="display: none;">
+    <div class="folder-window__inner">
+      <div class="folder-window__title-bar">
+        <span class="folder-window__title">Friends List</span>
+        <div class="folder-window__controls">
+          <svg width="103" height="35" viewBox="0 0 102.5 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect class="control-btn minimize-btn" x="0.5" y="0.5" width="34" height="34" stroke="black"/>
+            <path d="M10 18H26" stroke="black" stroke-width="2"/>
+            <rect class="control-btn maximize-btn" x="34.5" y="0.5" width="34" height="34" fill="#EFEFEF" stroke="black"/>
+            <path d="M43 12H59" stroke="black" stroke-width="2"/>
+            <path d="M43 14H59" stroke="black" stroke-width="2"/>
+            <path d="M44 14V23" stroke="black" stroke-width="2"/>
+            <path d="M58 14V23" stroke="black" stroke-width="2"/>
+            <path d="M43 23H59" stroke="black" stroke-width="2"/>
+            <rect class="control-btn close-btn" x="68.5" y="0.5" width="34" height="34" stroke="black"/>
+            <path d="M80 23.3137L91.3137 12" stroke="black" stroke-width="2"/>
+            <path d="M80 12L91.3137 23.3137" stroke="black" stroke-width="2"/>
+          </svg>
+        </div>
+      </div>
+      <div class="folder-window__content">
+        <p>Friends List content coming soon.</p>
+      </div>
+      <div class="resize-handle resize-handle-top"></div>
+      <div class="resize-handle resize-handle-right"></div>
+      <div class="resize-handle resize-handle-bottom"></div>
+      <div class="resize-handle resize-handle-left"></div>
+      <div class="resize-handle resize-handle-top-left"></div>
+      <div class="resize-handle resize-handle-top-right"></div>
+      <div class="resize-handle resize-handle-bottom-left"></div>
+      <div class="resize-handle resize-handle-bottom-right"></div>
+    </div>
+  </div>
+
+  <!-- ── Window: Sunseeker ─────────────────────────────────── -->
+  <div id="window-sunseeker" class="folder-window" style="display: none;">
+    <div class="folder-window__inner">
+      <div class="folder-window__title-bar">
+        <span class="folder-window__title">Sunseeker</span>
+        <div class="folder-window__controls">
+          <svg width="103" height="35" viewBox="0 0 102.5 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect class="control-btn minimize-btn" x="0.5" y="0.5" width="34" height="34" stroke="black"/>
+            <path d="M10 18H26" stroke="black" stroke-width="2"/>
+            <rect class="control-btn maximize-btn" x="34.5" y="0.5" width="34" height="34" fill="#EFEFEF" stroke="black"/>
+            <path d="M43 12H59" stroke="black" stroke-width="2"/>
+            <path d="M43 14H59" stroke="black" stroke-width="2"/>
+            <path d="M44 14V23" stroke="black" stroke-width="2"/>
+            <path d="M58 14V23" stroke="black" stroke-width="2"/>
+            <path d="M43 23H59" stroke="black" stroke-width="2"/>
+            <rect class="control-btn close-btn" x="68.5" y="0.5" width="34" height="34" stroke="black"/>
+            <path d="M80 23.3137L91.3137 12" stroke="black" stroke-width="2"/>
+            <path d="M80 12L91.3137 23.3137" stroke="black" stroke-width="2"/>
+          </svg>
+        </div>
+      </div>
+      <div class="folder-window__content">
+        <p>Sunseeker content coming soon.</p>
+      </div>
+      <div class="resize-handle resize-handle-top"></div>
+      <div class="resize-handle resize-handle-right"></div>
+      <div class="resize-handle resize-handle-bottom"></div>
+      <div class="resize-handle resize-handle-left"></div>
+      <div class="resize-handle resize-handle-top-left"></div>
+      <div class="resize-handle resize-handle-top-right"></div>
+      <div class="resize-handle resize-handle-bottom-left"></div>
+      <div class="resize-handle resize-handle-bottom-right"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
