@@ -1,6 +1,8 @@
 /* ── Reset & Body ─────────────────────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 body {
@@ -12,6 +14,10 @@ body {
   background-size: cover;
   background-position: center;
   font-family: 'PS Interplanetary', 'Courier New', monospace;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  font-smooth: never;
+  text-rendering: optimizeSpeed;
 }
 
 /* ── Desktop Icons ────────────────────────────────────────────────────────── */
@@ -55,7 +61,7 @@ body {
   width: 40rem;
   max-width: calc(100vw - 2rem);
   height: 22rem;
-  background: #FFFFFF;
+  background: #eaeaea;
   border: 1px solid #000;
   box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
   font-family: 'PS Interplanetary', 'Courier New', monospace;
@@ -73,14 +79,16 @@ body {
 
 .folder-window__title-bar {
   width: 100%;
-  height: 1.5rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-left: 0.33rem;
-  border-top: 1px solid #000;
-  border-bottom: 1px solid #000;
-  background: #EFEFEF;
+  border-top: 3px solid #305ddb;
+  border-right: 3px solid #021958;
+  border-left: 3px solid #305ddb;
+  /*border-bottom: 3px solid #244fc5;*/
+  background: #002BA3;
   flex-shrink: 0;
   box-sizing: border-box;
   margin-top: -1px;
@@ -90,12 +98,15 @@ body {
 .folder-window__title {
   font-size: 0.8rem;
   font-weight: 400;
-  color: #000;
+  color: #d9d9d9;
   user-select: none;
 }
 
 .folder-window__controls {
-  width: 4.5rem;
+  display: flex;
+  align-items: stretch;
+  gap: 3px;
+  padding-right: 6px;
   height: 1.5rem;
   flex-shrink: 0;
   line-height: 0;
@@ -104,17 +115,20 @@ body {
 }
 
 .folder-window__controls svg {
-  width: 100%;
   height: 100%;
+  width: auto;
   display: block;
-  vertical-align: top;
   pointer-events: none;
+  shape-rendering: crispEdges;
+  image-rendering: pixelated;
 }
 
 .folder-window__controls .control-btn {
   cursor: pointer !important;
   transition: fill 0.1s;
   pointer-events: all;
+  fill: #EFEFEF;
+  stroke: none;
 }
 
 .folder-window__controls .control-btn:hover {
@@ -126,7 +140,7 @@ body {
 }
 
 .folder-window__content {
-  background: #FFFFFF;
+  background: transparent;
   overflow-y: auto;
   overflow-x: hidden;
   flex: 1 1 0;
@@ -134,7 +148,10 @@ body {
   max-height: 100%;
   padding: 3px 4px 3px 3px;
   box-sizing: border-box;
-  border: 4px solid #D9D9D9;
+  /*border-top: 3px solid #f4f4f4;*/
+  border-left: 3px solid #f4f4f4;
+  border-right: 3px solid #b8b8b8;
+  /*border-bottom: 3px solid #b8b8b8;*/
 }
 
 .folder-window__content p {
@@ -258,4 +275,122 @@ body {
   width: 10px;
   height: 10px;
   cursor: nwse-resize;
+}
+
+/* ── Maps window ──────────────────────────────────────────────────────────── */
+.window-content--maps {
+  padding: 0;
+  border: none;
+  overflow: hidden;
+}
+
+.map-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transform: scale(1.25);
+  transform-origin: center center;
+}
+
+@media (max-width: 768px) {
+  .map-image {
+    transform: none;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+}
+
+/* ── Journal window ───────────────────────────────────────────────────────── */
+.window-content--journal {
+  padding: 1rem;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: #000;
+}
+
+.window-content--journal p {
+  margin: 0 0 0.75rem 0;
+  white-space: pre-wrap;
+}
+
+.journal-header {
+  display: none;
+}
+
+.window-content--journal p:first-of-type {
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem !important;
+}
+
+/* ── Friends List window ──────────────────────────────────────────────────── */
+.window-content--friends {
+  padding: 0.5rem;
+}
+
+.friend-entry {
+  font-size: 0.75rem;
+  padding: 0.3rem 0.5rem;
+  margin: 0;
+  border-bottom: 1px solid #EFEFEF;
+  letter-spacing: 0.03em;
+}
+
+.friend-handle {
+  opacity: 0.6;
+  margin-left: 0.4em;
+}
+
+/* ── Sunseeker window ─────────────────────────────────────────────────────── */
+.window-content--sunseeker {
+  padding: 1.25rem;
+  font-size: 0.75rem;
+  line-height: 1.8;
+  color: #000;
+  text-align: center;
+}
+
+.sunseeker-error {
+  margin: 0 0 0.25rem 0;
+  letter-spacing: 0.05em;
+}
+
+.sunseeker-noise {
+  margin: 0 0 1rem 0;
+  opacity: 0.5;
+}
+
+.sunseeker-prompt {
+  margin: 0 0 0.5rem 0;
+  letter-spacing: 0.08em;
+}
+
+.sunseeker-pin-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.sunseeker-pin-bracket {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.sunseeker-pin {
+  width: 8ch;
+  text-align: center;
+  font-family: inherit;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  border: none;
+  border-bottom: 1px solid #000;
+  background: transparent;
+  outline: none;
+  padding: 0 0.1rem;
+  color: #000;
+  caret-color: #000;
 }

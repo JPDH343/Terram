@@ -389,18 +389,17 @@
   // Extracted verbatim from archive.liquid (Doom cleanup code removed).
 
   function setupWindowControls(windowEl, windowId) {
-    const controls = windowEl.querySelector('.folder-window__controls svg');
+    const controlsEl     = windowEl.querySelector('.folder-window__controls');
 
-    const closeBtnRect    = controls.querySelector('.close-btn');
-    const closePaths      = controls.querySelectorAll('.close-btn ~ path');
-    const minimizeBtnRect = controls.querySelector('.minimize-btn');
-    const minimizePath    = controls.querySelector('.minimize-btn ~ path');
-    const maximizeBtnRect = controls.querySelector('.maximize-btn');
-    const maximizePaths   = Array.from(controls.querySelectorAll('.maximize-btn ~ path')).slice(0, 5);
+    const minimizeBtnRect  = controlsEl.querySelector('.minimize-btn');
+    const minimizeSymbols  = Array.from(minimizeBtnRect.closest('svg').querySelectorAll('.btn-symbol'));
+    const maximizeBtnRect  = controlsEl.querySelector('.maximize-btn');
+    const maximizeSymbols  = Array.from(maximizeBtnRect.closest('svg').querySelectorAll('.btn-symbol'));
+    const closeBtnRect     = controlsEl.querySelector('.close-btn');
+    const closeSymbols     = Array.from(closeBtnRect.closest('svg').querySelectorAll('.btn-symbol'));
 
     // ── Close ──
     closeBtnRect.style.cursor = 'pointer';
-    closeBtnRect.style.fill   = 'transparent';
 
     closeBtnRect.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -408,12 +407,12 @@
 
       // Visual feedback: invert button
       closeBtnRect.style.fill = '#000000';
-      closePaths.forEach(p => p.style.stroke = '#FFFFFF');
+      closeSymbols.forEach(s => s.style.fill = '#FFFFFF');
 
       setTimeout(() => {
         // Reset visual
-        closeBtnRect.style.fill = 'transparent';
-        closePaths.forEach(p => p.style.stroke = 'black');
+        closeBtnRect.style.fill = '';
+        closeSymbols.forEach(s => s.style.fill = '');
 
         windowEl.style.display = 'none';
         openWindows.delete(windowId);
@@ -433,7 +432,6 @@
 
     // ── Minimize ──
     minimizeBtnRect.style.cursor = 'pointer';
-    minimizeBtnRect.style.fill   = 'transparent';
 
     minimizeBtnRect.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -441,23 +439,23 @@
       const contentArea = windowEl.querySelector('.folder-window__content');
 
       if (isMinimized) {
+        windowEl.style.height = windowEl.dataset.restoreHeight || '';
         if (contentArea) contentArea.style.display = '';
-        minimizeBtnRect.style.fill   = 'transparent';
-        minimizeBtnRect.style.stroke = 'black';
-        minimizePath.style.stroke    = 'black';
+        minimizeBtnRect.style.fill = '';
+        minimizeSymbols.forEach(s => s.style.fill = '');
         windowEl.classList.remove('minimized');
       } else {
+        windowEl.dataset.restoreHeight = windowEl.style.height;
+        windowEl.style.height = '35px';
         if (contentArea) contentArea.style.display = 'none';
-        minimizeBtnRect.style.fill   = '#000000';
-        minimizeBtnRect.style.stroke = 'black';
-        minimizePath.style.stroke    = '#FFFFFF';
+        minimizeBtnRect.style.fill = '#000000';
+        minimizeSymbols.forEach(s => s.style.fill = '#FFFFFF');
         windowEl.classList.add('minimized');
       }
     });
 
     // ── Maximize ──
     maximizeBtnRect.style.cursor = 'pointer';
-    maximizeBtnRect.style.fill   = 'transparent';
 
     maximizeBtnRect.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -467,9 +465,8 @@
         const contentArea = windowEl.querySelector('.folder-window__content');
         if (contentArea) contentArea.style.display = '';
         windowEl.classList.remove('minimized');
-        minimizeBtnRect.style.fill   = 'transparent';
-        minimizeBtnRect.style.stroke = 'black';
-        minimizePath.style.stroke    = 'black';
+        minimizeBtnRect.style.fill = '';
+        minimizeSymbols.forEach(s => s.style.fill = '');
       }
 
       const isMaximized = windowEl.dataset.maximized === 'true';
@@ -483,9 +480,8 @@
         windowEl.style.bottom = '';
         windowEl.dataset.maximized = 'false';
 
-        maximizeBtnRect.style.fill   = 'transparent';
-        maximizeBtnRect.style.stroke = 'black';
-        maximizePaths.forEach(p => p.style.stroke = 'black');
+        maximizeBtnRect.style.fill = '';
+        maximizeSymbols.forEach(s => s.style.fill = '');
       } else {
         // Store current dimensions before maximizing
         const rect = windowEl.getBoundingClientRect();
@@ -503,9 +499,8 @@
         windowEl.style.height = (borderBottom - borderTop)  + 'px';
         windowEl.dataset.maximized = 'true';
 
-        maximizeBtnRect.style.fill   = '#000000';
-        maximizeBtnRect.style.stroke = 'black';
-        maximizePaths.forEach(p => p.style.stroke = '#FFFFFF');
+        maximizeBtnRect.style.fill = '#000000';
+        maximizeSymbols.forEach(s => s.style.fill = '#FFFFFF');
       }
     });
 
@@ -513,9 +508,8 @@
     windowEl.addEventListener('manualresize', () => {
       if (windowEl.dataset.maximized === 'true') {
         windowEl.dataset.maximized = 'false';
-        maximizeBtnRect.style.fill   = 'transparent';
-        maximizeBtnRect.style.stroke = 'black';
-        maximizePaths.forEach(p => p.style.stroke = 'black');
+        maximizeBtnRect.style.fill = '';
+        maximizeSymbols.forEach(s => s.style.fill = '');
       }
     });
   }
