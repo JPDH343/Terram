@@ -315,14 +315,25 @@ body {
   white-space: pre-wrap;
 }
 
-.journal-header {
-  display: none;
-}
-
-.window-content--journal p:first-of-type {
+.journal-section-header {
   font-weight: bold;
   letter-spacing: 0.05em;
   margin-bottom: 1rem !important;
+}
+
+.journal-next-page {
+  text-align: center;
+  opacity: 0.35;
+  letter-spacing: 0.2em;
+  border-top: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  padding: 0.2rem 0;
+  margin: 1.25rem 0 !important;
+}
+
+.journal-letters {
+  margin-left: 1rem;
+  line-height: 2;
 }
 
 /* ── Friends List window ──────────────────────────────────────────────────── */
